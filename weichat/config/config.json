@@ -1,0 +1,9 @@
+{  
+    "wechat" : {  
+        "appID": "wxdd6ff9b96e990546",  
+        "appSecret": "a0f7d90a8202cf555fb16f3f570a1dcd",  
+        "token": "wxexpress",  
+        "prefix": "https://api.weixin.qq.com/cgi-bin/",  
+        "mpPrefix": "https://mp.weixin.qq.com/cgi-bin/"  
+    }  
+} 
