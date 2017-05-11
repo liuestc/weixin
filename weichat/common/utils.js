@@ -21,6 +21,7 @@ utils.sign = function (config){
         if (req.method == 'GET') {  
   
             if (sha == signature) {  
+                console.log("我是echostr")
                 res.send(echostr+'')  
             }else{  
                 res.send('err');  
