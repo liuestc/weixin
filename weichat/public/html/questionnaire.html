@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文艺青年精神广,普通青年风度高,快和我一起来测测你是哪种青年?</title>
+        <img src="../image/title.jpg" width="0" height="0"/>
+    <link rel="stylesheet" href="../css/questionnaire.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../image/title.ico" media="screen" />
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/vue-router.min.js"></script>
+</head>
+<body>
+<div class="wrap-content">
+    <div class="content" id="app">
+        <div class="question">
+            <div class="question-num">{{itemShow.num}}</div>
+            <div class="question-text">
+                <div class="question-text-center">
+                    {{itemShow.question}}
+                </div>
+            </div>
+        </div>
+        <div class="answer">
+            <div class="answer-checked" v-bind:class="{'checked':checkYes}" @click="checkItem(1)"></div>
+            <div class="answer-text">是</div>
+        </div>
+        <div class="answer">
+            <div class="answer-checked" v-bind:class="{'checked':checkNo}" @click="checkItem(2)"></div>
+            <div class="answer-text">否</div>
+        </div>
+        <button class="next" @click="nextQuestion">{{nextTitle}}</button>
+    </div>
+</div>
+<script src="../js/questionnaire.js"></script>
+</body>
+</html>

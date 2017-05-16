@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>222333</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../image/title.ico" media="screen" />
+    <script src="../js/vue.min.js"></script>
+    <link rel="stylesheet" href="../css/questionnaire_result.css">
+</head>
+<style>
+</style>
+<!-- <img src="../image/title.jpg" id='imgTest' width="0" height="0"/> -->
+<body>
+<div class="wrap-content">
+    <div class="content" id="app">
+        <div class="question-result">
+            测试结果
+        </div>
+<!--         <div class='imgtest'>
+    <img src="../image/title.jpg" id='imgTest' />
+</div> -->
+        
+        <div class="question-result-text">
+            得分：{{score}}<br><br>
+            {{result}}
+            <a href="questionnaire.html">我也要测试</a>
+            <p v-if="score>=60">
+                你真正热爱着某领域，不是关注划分消费内容的层次，喝咖啡还是吃大蒜，啃猪蹄还是品牛腩。而更喜欢努力对电影，美食，音乐有一个细致的分析，好看在哪里，好吃在哪里，好听在哪里。选择通过努力来拥有一个诗意的世界。<br>
+                1.情绪化的对待真实生活<br>
+                2.超过其真实理解力的表现出对艺术的偏爱，但却缺乏对应的实际能力；矫情的超过限度的表现自己在某方面的愿望而不是能力<br>
+                3.缺乏稳定而理性的自省和思考能力，但又零碎的寻求感性的自我矛盾，并愿意把这一点展示出来<br>
+                4.对于知识是零散的感受性的接受状态，而不是比较完整系统的思考。换句话说：沉溺于最具表面活力的当代艺术性事物（摇滚乐、文艺电影）的片断感受，在其中自我感动和寻求受难；没有较为系统的理性知识（哲学、历史、文学）根基的支撑<br>
+                5.把想象中的艺术和想象中的生活糅合起来变成自己的真实。用张楚的歌词来形容，就是“随时可以出卖自己，随时准备感动”，而不是随时反省媚俗。米兰昆德拉的《不朽》和《生活在别处》，都是对媚俗的调侃，只不过很多人理解的相反，尤其是后一部，呵呵。如果可以，《红与黑》也可以看成是对媚俗的暗讽。<br>
+                6.轻视逻辑<br>
+                7.不一定敏锐但绝对敏感<br>
+                敏锐：在重要事情上，因经验、性格和天赋而能迅速且准确的透过事件表面判断其本质意义和走向，帮助自己和别人做出有价值的行动决定。<br>
+                敏感：在无关紧要的事情上，因习惯性的臆想而迅速但绝不靠谱的通过一件事臆造出另一些事或得出结论，并且让自己感同身受的在其中寻求感动和煎熬。
+            </p>
+            <p v-if="score<60">
+                你会关注于生活中的茶米油盐，疯狂与浪漫的情怀会存在于你的心中，但不会占据太多。总的来说你还是理智多于感性，所以既要仰望星空，也会脚踏实地。<br>
+                1.理性的对待真实生活<br>
+                2.拥有对艺术生活和现实对应的实际能力；3.拥有稳定而理性的自省和思考能力，会在某些时间零碎地寻求感性的自我矛盾，并愿意把这一点展示出来<br>
+                4.愿意对知识进行比较完整系统的思考。不愿沉浸在表面的片断感受，愿意寻求较为系统的理性知识（哲学、历史、文学）根基的支撑<br>
+                5.把想象中的艺术和想象中的生活糅合起来变成自己的真实。<br>
+                6.重视逻辑 思维<br>
+                7.敏锐：在重要事情上，因经验、性格和天赋而能迅速且准确的透过事件表面判断其本质意义和走向，帮助自己和别人做出有价值的行为
+            </p>
+            <figure>
+                <figcaption>长按下方二维码，关注年轻新！</figcaption>
+                <img src="../image/code.jpg" height="258" width="258"/></div>
+            </figure>
+    </div>
+</div>
+<script src="../js/questionnaire_result.js"></script>
+<script src='http://cdn.bootcss.com/jquery/3.2.1/jquery.js'></script>
+<script src='http://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
+<!-- <script src='../js/test.js'></script> -->
+<script>
+
+$(function(){
+    function resetWechatShare() {
+        alert("wechat ready执行了")
+        wx.ready(function () {       
+            // alert(JSON.stringify(wechatShareObj));
+            function initTimelineShare() {
+                wx.onMenuShareTimeline({
+                    // title: '这是一个测试',
+                    title: "测试2号", // 分享标题
+                    link: 'http://7e55b0d2.ngrok.io/html/questionnaire.html',
+                    imgUrl: 'http://7e55b0d2.ngrok.io/image/title.jpg', // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        // alert('分享成功');                        
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            }
+
+            function initFriendShare() {
+                wx.onMenuShareAppMessage({
+                    title: "发送给朋友", // 分享标题
+                    desc: "描述", // 分享描述
+                    link: "http://7e55b0d2.ngrok.io/html/questionnaire.html", // 分享链接
+                    imgUrl: 'http://7e55b0d2.ngrok.io/image/title.jpg', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        //campaignTools.pushGaEvent('spring2015', 'newShare', 'wechatFriend');
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            }
+
+            initTimelineShare();
+            initFriendShare();
+        });
+    }
+
+    var location2 = location.href.split('#')[0]
+    $.ajax({
+        url: "http://7e55b0d2.ngrok.io/getTicket?url=" + location2,
+        type: "get",
+        success: function(res) {
+            console.log("res", res)
+            wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: 'wxb3822d4013efc31f', // 必填，公众号的唯一标识
+                timestamp: res.timestamp, // 必填，生成签名的时间戳
+                nonceStr: res.nonceStr, // 必填，生成签名的随机串
+                signature: res.signature, // 必填，签名，见附录1
+                jsApiList: [
+                        'checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'hideMenuItems'
+                    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+
+            // configWechat();
+            resetWechatShare()
+
+
+        },
+        error: function(err) {
+            alert(err)
+        }
+    })
+})
+
+
+</script>
+</body>
+</html>
