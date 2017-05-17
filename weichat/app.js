@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+const fs = require('fs');
+
 var config=require('./config/config.json')
 var utils=require('./common/utils.js')
 
@@ -31,39 +33,142 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+const token = fs.readFileSync('./token.json').toString();
+
+const test={
+    "ww":1,
+    "222":2
+}
+
+app.use("/read",function(req,res,next){
+    fs.readFile("./token.json",function(err,data){
+        if(err){
+            throw err;
+        }
+        res.send(JSON.parse(data))
+    })
+        
+
+})
 
 app.use("/getTicket",function(req,res,next){
     console.log("query参数",req.query.url)
    
 /*分割线拿到token*/
-    let appid = "wxb3822d4013efc31f";
-    let appsecret = "9ca3b2d7273db523fa106144b7bc6529";
+    let appid = config.wechat.appID;
+    let appsecret = config.wechat.appSecret;
     let tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
-    request(tokenUrl,(err,response,body)=>{
-        let json = JSON.parse(body);
-        console.log(json.access_token);
-        let jsapiUrl='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+json.access_token+'&type=jsapi'
-        request(jsapiUrl,(err,response,body)=>{
-            let jsapiResult = JSON.parse(body);
-            console.log(jsapiResult.ticket)
-            // res.send(jsapiResult)
-            var test=signTicket(jsapiResult.ticket, req.query.url);
-            res.set({
-                "Access-Control-Allow-Origin": "*"
-                ,"Access-Control-Allow-Methods": "POST,GET"
-                ,"Access-Control-Allow-Credentials": "true"
-            });
-            res.json(test)
-            
+/*先拿到文件中的token,文件中token的时间戳和当前比较，如果小于7200，则token==文件，否则新获取*/
+
+    let tokenFile=fs.readFileSync('./token.json');
+    let token=JSON.parse(tokenFile);
+    console.log("我是token",token)
+    let nowTime=parseInt(new Date().getTime() / 1000);
+    console.log("now时间",nowTime)
+
+    if((nowTime-token.expires_in)<7200){
+        console.log("我没有过期");
+        console.log(token)
+            let jsapiUrl='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+token.token+'&type=jsapi'
+            request(jsapiUrl,(err,response,body)=>{
+                let jsapiResult = JSON.parse(body);
+                console.log(jsapiResult.ticket)
+                var test=signTicket(jsapiResult.ticket, req.query.url);
+                res.set({
+                    "Access-Control-Allow-Origin": "*"
+                    ,"Access-Control-Allow-Methods": "POST,GET"
+                    ,"Access-Control-Allow-Credentials": "true"
+                });
+                res.json(test)
+            })
+
+
+    }
+
+    else{
+        console.log("进来了")
+        request(tokenUrl,(err,response,body)=>{
+            let json = JSON.parse(body);
+            let token = {
+                "token":json['access_token'],
+                "expires_in":parseInt(new Date().getTime() / 1000)+""
+            };
+            fs.writeFile("./token.json",JSON.stringify(token),function(err){
+                if(err){
+                    console.log(err)
+                }
+                console.log("token存储成功")
+            })
+
+            let jsapiUrl='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+json.access_token+'&type=jsapi'
+            request(jsapiUrl,(err,response,body)=>{
+                let jsapiResult = JSON.parse(body);
+                console.log(jsapiResult.ticket)
+                // res.send(jsapiResult)
+                var test=signTicket(jsapiResult.ticket, req.query.url);
+                res.set({
+                    "Access-Control-Allow-Origin": "*"
+                    ,"Access-Control-Allow-Methods": "POST,GET"
+                    ,"Access-Control-Allow-Credentials": "true"
+                });
+                res.json(test)
+            })
+
         })
-    })
+    }
+
+
+
+    // let jsapiUrl='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+json.access_token+'&type=jsapi'
+    // request(jsapiUrl,(err,response,body)=>{
+    //     let jsapiResult = JSON.parse(body);
+    //     console.log(jsapiResult.ticket)
+    //     // res.send(jsapiResult)
+    //     var test=signTicket(jsapiResult.ticket, req.query.url);
+    //     res.set({
+    //         "Access-Control-Allow-Origin": "*"
+    //         ,"Access-Control-Allow-Methods": "POST,GET"
+    //         ,"Access-Control-Allow-Credentials": "true"
+    //     });
+    //     res.json(test)
+        
+    // })
+
+
+/*分割线,原来代码*/
+    // request(tokenUrl,(err,response,body)=>{
+    //     let json = JSON.parse(body);
+    //     /*文件存储token*/
+    //     let token = {
+    //         "token":res['access_token'],
+    //         "expires_in":parseInt(new Date().getTime() / 1000) + ''
+    //     };
+
+    //     fs.writeFile("./token.json",JSON.stringify(token),function(err){
+    //         if(err){
+    //             console.log(err)
+    //         }
+    //         console.log("token存储成功")
+    //     })
+    //     // console.log(json.access_token);
+    //     let jsapiUrl='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+json.access_token+'&type=jsapi'
+    //     request(jsapiUrl,(err,response,body)=>{
+    //         let jsapiResult = JSON.parse(body);
+    //         console.log(jsapiResult.ticket)
+    //         // res.send(jsapiResult)
+    //         var test=signTicket(jsapiResult.ticket, req.query.url);
+    //         res.set({
+    //             "Access-Control-Allow-Origin": "*"
+    //             ,"Access-Control-Allow-Methods": "POST,GET"
+    //             ,"Access-Control-Allow-Credentials": "true"
+    //         });
+    //         res.json(test)
+            
+    //     })
+    // })
 })
 
 
-// app.use("/",function(req,res,next){
-//     res.sendfile("./public/index2.html");
-//     next()
-// })
 app.use(utils.sign(config))
 
 
@@ -71,18 +176,28 @@ app.use(utils.sign(config))
 app.use("/", (req, res, next) => {
     //1 获取access_token
 
-    let appid = "wxb3822d4013efc31f";
-    let appsecret = "9ca3b2d7273db523fa106144b7bc6529";
+    let appid = config.wechat.appID;
+    let appsecret = config.wechat.appSecret;
 
     let tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
 
     request(tokenUrl, (err, response, body) => {
 
         //body是字符串
+        console.log("是不是每一步都压要进这个？")
         let json = JSON.parse(body);
 
-        console.log("我请求token成功")
-        console.log("token!!!",json.access_token);
+        let token = res['access_token'];
+
+        fs.writeFile("./token.json",token,function(err){
+            if(err){
+                console.log(err)
+            }
+            console.log("token存储成功")
+        })
+
+        // console.log("我请求token成功")
+        // console.log("token!!!",json.access_token);
 
 
         let data = {
@@ -129,10 +244,10 @@ app.use("/", (req, res, next) => {
             }
         }, (err, response, body) => {
             if(err){
-            	console.log("我不会发送菜单")
+            	// console.log("我不会发送菜单")
                 res.send(err)
             }else{
-            	console.log("我是那个菜单",body)
+            	// console.log("我是那个菜单",body)
                 res.send(body)
             }
         })

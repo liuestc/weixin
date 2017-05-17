@@ -5,7 +5,7 @@
     <title>222333</title>
     <link rel="shortcut icon" type="image/x-icon" href="../image/title.ico" media="screen" />
     <script src="../js/vue.min.js"></script>
-    <link rel="stylesheet" href="../css/questionnaire_result.css">
+    <!-- <link rel="stylesheet" href="../css/questionnaire_result.css"> -->
 </head>
 <style>
 </style>
@@ -56,7 +56,6 @@
 <script src='http://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <!-- <script src='../js/test.js'></script> -->
 <script>
-
 $(function(){
     function resetWechatShare() {
         alert("wechat ready执行了")
@@ -108,7 +107,7 @@ $(function(){
         success: function(res) {
             console.log("res", res)
             wx.config({
-                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId: 'wxb3822d4013efc31f', // 必填，公众号的唯一标识
                 timestamp: res.timestamp, // 必填，生成签名的时间戳
                 nonceStr: res.nonceStr, // 必填，生成签名的随机串
@@ -125,7 +124,6 @@ $(function(){
 
             // configWechat();
             resetWechatShare()
-
 
         },
         error: function(err) {
