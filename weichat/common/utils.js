@@ -1,5 +1,7 @@
 var utils = {};  
-var sha1 = require('sha1');  
+var sha1 = require('sha1');
+const request = require("request")
+// var config=require('../token.json')
   
 //检查微信签名认证中间件  
 utils.sign = function (config){  
@@ -36,6 +38,28 @@ utils.sign = function (config){
         }  
     }  
 };  
+
+utils.getToken=function(appid,appsecret,callback){
+    console.log("我是utils里面的")
+    let tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
+
+    console.log("URL",tokenUrl)
+
+    request(tokenUrl,(err,response,body)=>{
+        let jsonResult = JSON.parse(body);
+        callback(jsonResult);
+    })
+
+}
+
+utils.Test=function(callback){
+    request("http://localhost:3000/test/1.json",(err,res,body)=>{
+        let result=JSON.parse(body)
+        console.log("result",result)
+        // console.log(typeof result)
+        callback(result)
+    })
+}
   
 module.exports = utils; 
 

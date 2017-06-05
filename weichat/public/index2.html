@@ -18,10 +18,44 @@ body{
 </style>
 <body>
 	<!-- <div>我是公共文件</div> -->
-	<p>8888</p>
+	<p>Promise TEST</p>
 </body>
 
-<!-- <script src='http://cdn.bootcss.com/jquery/3.2.1/jquery.js'></script> -->
+<script src='http://cdn.bootcss.com/jquery/3.2.1/jquery.js'></script>
 <script>
+$(function(){
+	// $.ajax({
+	// 	url:"./test/1.json",
+	// 	success:function(data){
+	// 		if(data){
+	// 			$.ajax({
+	// 				url:"./test/2.json",
+	// 				success:function(data2){
+	// 					console.log("data1",data);
+	// 					console.log("data2",data2)
+	// 				}
+	// 			})
+	// 		}
+	// 	}
+	// })
+	var promise=new Promise(resolve=>{
+		$.ajax({
+			url:"./test/1.json",
+			success:function(data){
+				resolve(data)
+			}
+		})
+	})
+
+	promise.then(function(value){
+		$.ajax({
+			url:"./test/2.json",
+			success:function(data2){
+				console.log("promise",value);
+				console.log("promise2",data2)
+			}
+		})
+	})
+})
 </script>
 </html>

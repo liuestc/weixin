@@ -18,6 +18,11 @@ var users = require('./routes/users');
 
 const request = require("request")
 
+
+/*常量*/
+let appid = config.wechat.appID;
+let appsecret = config.wechat.appSecret;
+
 var app = express();
 
 // view engine setup
@@ -35,11 +40,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const token = fs.readFileSync('./token.json').toString();
 
-const test={
-    "ww":1,
-    "222":2
-}
-
 app.use("/read",function(req,res,next){
     fs.readFile("./token.json",function(err,data){
         if(err){
@@ -51,12 +51,29 @@ app.use("/read",function(req,res,next){
 
 })
 
-app.use("/getTicket",function(req,res,next){
-    console.log("query参数",req.query.url)
+app.use("/test2",function(req,res,next){
+   var s=utils.Test(function(value){
+    console.log("value",value)
+    console.log("!!!")
+    return value
    
+   })
+   res.json(s())
+
+})
+
+app.use('/getUserInfo',function(req,res,next){
+   console.log("进入getUserInfo")
+   utils.getToken(appid,appsecret,function(res){
+    console.log(res)
+   })
+   //console.log(a)
+})
+
+app.use("/getTicket",function(req,res,next){
+    console.log("query参数",req.query.url)   
 /*分割线拿到token*/
-    let appid = config.wechat.appID;
-    let appsecret = config.wechat.appSecret;
+
     let tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
 /*先拿到文件中的token,文件中token的时间戳和当前比较，如果小于7200，则token==文件，否则新获取*/
 
