@@ -24,7 +24,7 @@
 
 
     <flexbox class='flex-init'>
-      <flexbox-item :span="1/6">
+      <flexbox-item :span="1/5">
         <div class="flex-title">
           日期
         </div>
@@ -33,20 +33,21 @@
         <div class="">
           <flexbox direction="column">
             <flexbox-item class='date-picker'>
-              <div>                   
-                <x-input title="" name="ww" placeholder="5月25日"></x-input>
+              <div>    
+                <datepicker v-model="dateRange" :range="rangeType"></datepicker>
+                <!-- <x-input title="" name="ww" placeholder="5月25日"></x-input> -->
               </div>
             </flexbox-item>
-            <flexbox-item class='date-picker'>
+<!--             <flexbox-item class='date-picker'>
               <div>                   
                 <x-input title="" name="we" placeholder="5月25日"></x-input>
               </div>
-            </flexbox-item>
+            </flexbox-item> -->
           </flexbox>
         </div>
       </flexbox-item>
-      <flexbox-item :span="1/6">
-        <div class="">共一晚</div>
+      <flexbox-item :span="1/5">
+        <div class="">共{{subtractTime}}晚</div>
       </flexbox-item>
     </flexbox>
 
@@ -109,6 +110,7 @@
     <group>
       <Test v-on:test='father'></Test>
     </group>
+    <x-button type="primary">查询</x-button>
   </div>
 </template>
 
@@ -117,6 +119,7 @@ import Vue from 'vue'
 import { Group,XInput,Icon,CellBox,Cell,Swiper, GroupTitle, SwiperItem, XButton, Divider,Flexbox,FlexboxItem,TransferDom, Popup,  XSwitch, Scroller, Toast, XAddress,    Checker,CheckerItem} from 'vux'
 import axios from 'axios'
 import Test from './test.vue'
+import datepicker from 'vue-date'
 const baseList = [{
   url: 'javascript:',
   img: 'https://static.vux.li/demo/1.jpg',
@@ -170,7 +173,8 @@ export default {
     XButton,
     CheckerItem,
     Checker,
-    Test
+    Test,
+    datepicker
   },
   created () {
     console.log(11111)
@@ -235,8 +239,7 @@ export default {
     father(){
       console.log("father")
     }
-
-  },
+},
   data () {
     return {
       demo03_list: demoList,
@@ -244,20 +247,53 @@ export default {
         demo5: 1,
         price:0,
         show8: false,
-        problemList:""
+        problemList:"",
+        testDate:'2016-09-08',
+        dateRange:(function(){
+        //默认显示今天明天
+          Date.prototype.Format = function (fmt) { //author: meizz 
+              var o = {
+                  "M+": this.getMonth() + 1, //月份 
+                  "d+": this.getDate(), //日 
+                  "h+": this.getHours(), //小时 
+                  "m+": this.getMinutes(), //分 
+                  "s+": this.getSeconds(), //秒 
+                  "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                  "S": this.getMilliseconds() //毫秒 
+              };
+              if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+              for (var k in o)
+              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+              return fmt;
+          }
+          var startTime = new Date().Format("yyyy-MM-dd");
+          var endTime = new Date(Date.now()+24*60*60*1000).Format("yyyy-MM-dd");
+
+          console.log("startTime",startTime)
+          return [startTime,endTime]
+        })(),
+
+        rangeType:true
+        //subtractTime:1
+    }
+  },
+  computed:{
+    subtractTime (){
+      let startTime=this.dateRange[0].split("-").join("/");
+      let endTime=this.dateRange[1].split("-").join("/")
+      let time=(new Date(endTime)-new Date(startTime))/(1000*60*60*24)
+      return time
     }
   }
+
 }
 </script>
 
-<style scoped lang='less'>
-/*@import '~vux/src/styles/reset.less'*/
-@import '~vux/src/styles/close.less';
-
+<style scoped >
+/*@import '~vux/src/styles/reset.less';*/
 ul,li{
   list-style: none;
 }
-
 .group-init{
   margin-top:0;
 }
@@ -384,6 +420,22 @@ ul,li{
 .activeul{
   /*border:1px solid green;*/
   background: #ccc;
+}
+
+
+button.weui-btn.weui-btn_primary {
+    width: 88%;
+    margin-top: 30px;
+}
+
+/*.date-picker>div.input-wrapper{
+   border:0 !important;
+}
+.input{
+  height:auto !important;
+}*/
+.input-wrapper[_v-6c618eea]{
+  border:0;
 }
 </style>
 
