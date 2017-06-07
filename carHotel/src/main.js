@@ -6,12 +6,16 @@ import VueRouter from 'vue-router'
 import App from './App'
 import Home from './components/HelloFromVux'
 import axios from 'axios'
+import List from './components/list.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{
   path: '/',
   component: Home
+},{
+	path:'/myOrder',
+	component:List
 }]
 
 const router = new VueRouter({

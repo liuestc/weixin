@@ -35,14 +35,8 @@
             <flexbox-item class='date-picker'>
               <div>    
                 <datepicker v-model="dateRange" :range="rangeType"></datepicker>
-                <!-- <x-input title="" name="ww" placeholder="5月25日"></x-input> -->
               </div>
             </flexbox-item>
-<!--             <flexbox-item class='date-picker'>
-              <div>                   
-                <x-input title="" name="we" placeholder="5月25日"></x-input>
-              </div>
-            </flexbox-item> -->
           </flexbox>
         </div>
       </flexbox-item>
@@ -107,19 +101,58 @@
       </popup>
     </div>
 
-    <group>
+<!--     <group>
       <Test v-on:test='father'></Test>
-    </group>
-    <x-button type="primary">查询</x-button>
+    </group> -->
+    <router-link to="/myOrder">
+      <x-button type="primary" @click.native='searchHotel'>查询</x-button>
+    </router-link>
+
+<!--     <p class='testRouter'>
+      <router-link to="/myOrder">Login</router-link>
+      <router-link to="/">Index</router-link>
+    </p> -->
+
+
+<!--     <div>
+    qqq
+      <router-view></router-view>
+    </div> -->
+    
+
+<!--     <tab>
+      <tab-item selected @on-item-click="tabToggle">酒店预订</tab-item>
+      <tab-item @on-item-click="tabToggle">我的订单</tab-item>
+      <tab-item @on-item-click="tabToggle">我的信息</tab-item>
+    </tab> -->
+
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import { Group,XInput,Icon,CellBox,Cell,Swiper, GroupTitle, SwiperItem, XButton, Divider,Flexbox,FlexboxItem,TransferDom, Popup,  XSwitch, Scroller, Toast, XAddress,    Checker,CheckerItem} from 'vux'
+import VueRouter from 'vue-router'
+import { Group,XInput,Icon,CellBox,Cell,Swiper, GroupTitle, SwiperItem, XButton, Divider,Flexbox,FlexboxItem,TransferDom, Popup,  XSwitch, Scroller, Toast, XAddress, Tab,TabItem,Checker,CheckerItem} from 'vux'
 import axios from 'axios'
-import Test from './test.vue'
+import List from './list.vue'
 import datepicker from 'vue-date'
+
+// Vue.use(VueRouter)
+
+// const routes=[{
+//   path:'/',
+//   component:Test
+// },
+//   {
+//     path:'/myOrder',
+//     component:Test
+//   }
+// ]
+
+// const router=new VueRouter({
+//   routes
+// })
+
 const baseList = [{
   url: 'javascript:',
   img: 'https://static.vux.li/demo/1.jpg',
@@ -173,7 +206,9 @@ export default {
     XButton,
     CheckerItem,
     Checker,
-    Test,
+    List,
+    Tab,
+    TabItem,
     datepicker
   },
   created () {
@@ -238,6 +273,12 @@ export default {
 
     father(){
       console.log("father")
+    },
+    searchHotel(){
+      window.location
+    },
+    tabToggle(index){
+      console.log(index)
     }
 },
   data () {
@@ -434,7 +475,7 @@ button.weui-btn.weui-btn_primary {
 .input{
   height:auto !important;
 }*/
-.input-wrapper[_v-6c618eea]{
+.input-wrapper{
   border:0;
 }
 </style>
