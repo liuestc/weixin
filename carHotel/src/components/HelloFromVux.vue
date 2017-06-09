@@ -1,61 +1,70 @@
 <template>
   <div>
-    <div class="">
+  
+
+      <flexbox class='hotel-title'>
+        <flexbox-item class='page-title'> 汽车驿站</flexbox-item>
+        <flexbox-item class='page-title' :span='1/3'  @click='showRightPopup'><i  @click='showRightPopup' class="iconfont">&#xe6e2;</i><span @click='showRightPopup'>我的</span></flexbox-item>        
+      </flexbox>
+
+
+    <div class="swiper-wrapper">
       <!-- <group-title>自动轮播</group-title> -->
       <swiper :list="demo03_list" auto style="width:100%;margin:0 auto;" height="180px" dots-class="custom-bottom" dots-position="center"></swiper>
     </div>
 
 
-    <flexbox class='flex-init'>
-      <flexbox-item :span="2">
-        <div class="flex-title">
-          目的地
+    <div class="form-wrapper">
+
+      <flexbox class='flex-init'>
+        <flexbox-item :span="2">
+          <div class="flex-title">
+            目的地
+          </div>
+        </flexbox-item>
+        <flexbox-item>
+          <div class="">
+            <x-input title="" name="username" placeholder="四川成都市武侯"></x-input>
+          </div>
+        </flexbox-item>
+        <flexbox-item :span="2">
+          <div class="">></div>
+        </flexbox-item>
+      </flexbox>
+
+      <flexbox>
+        <flexbox-item class='date-title' :span='1/5'>入住</flexbox-item>
+        <flexbox-item class='date-title' :span='1/5'>离店</flexbox-item>        
+      </flexbox>
+
+      <flexbox class='flex-init' >
+
+        <flexbox-item>
+            <flexbox >
+              <flexbox-item class='date-picker'>
+                <div>    
+                  <datepicker v-model="dateRange" :range="rangeType"></datepicker>
+                </div>
+              </flexbox-item>
+            </flexbox>
+
+        </flexbox-item>
+        <flexbox-item :span="1/5">
+          <div class="">共{{subtractTime}}晚</div>
+        </flexbox-item>
+      </flexbox>
+
+      <group gutter='0'>
+        <div>
+          <x-input title="" @on-focus='showLeftPopup'   name='eee'  placeholder="位置/关键字/品牌/酒店"></x-input>
         </div>
-      </flexbox-item>
-      <flexbox-item>
-        <div class="">
-          <x-input title="" name="username" placeholder="四川成都市武侯"></x-input>
-        </div>
-      </flexbox-item>
-      <flexbox-item :span="2">
-        <div class="">></div>
-      </flexbox-item>
-    </flexbox>
-
-
-    <flexbox class='flex-init'>
-      <flexbox-item :span="1/5">
-        <div class="flex-title">
-          日期
-        </div>
-      </flexbox-item>
-      <flexbox-item>
-        <div class="">
-          <flexbox direction="column">
-            <flexbox-item class='date-picker'>
-              <div>    
-                <datepicker v-model="dateRange" :range="rangeType"></datepicker>
-              </div>
-            </flexbox-item>
-          </flexbox>
-        </div>
-      </flexbox-item>
-      <flexbox-item :span="1/5">
-        <div class="">共{{subtractTime}}晚</div>
-      </flexbox-item>
-    </flexbox>
-
-    <group gutter='0'>
-      <div>
-        <x-input title="" @on-focus='showLeftPopup'   name='eee'  placeholder="位置/关键字/品牌/酒店"></x-input>
-      </div>
-    </group>
-
-
-      <group @click='showPopup' gutter='0'>
-         <x-input title="" v-model='price' @on-focus='showPopup' name='eee'  placeholder="星级/价格"></x-input>
       </group>
 
+
+        <group @click='showPopup' gutter='0'>
+           <x-input title="" v-model='price' @on-focus='showPopup' name='eee'  placeholder="星级/价格"></x-input>
+        </group>
+    </div>
 
 
     <div v-transfer-dom>
@@ -101,6 +110,28 @@
       </popup>
     </div>
 
+
+
+    <div v-transfer-dom class='right-info'>
+      <popup v-model="showInfo" position="right" width="50%">
+        <div class="position-horizontal-demo">
+          <span class="vux-close" @click="showInfo = false"></span>
+
+          <div class="phone-info">
+            <p>123456789</p>
+            <div>退出</div>
+          </div>
+
+          <div class="info-list">
+            <ul>
+              <li><i></i><span>订单管理</span></li>
+              <li><i></i><span>我的信息</span></li>
+            </ul>
+          </div>
+            
+        </div>
+      </popup>
+    </div>
 <!--     <group>
       <Test v-on:test='father'></Test>
     </group> -->
@@ -108,28 +139,13 @@
       <x-button type="primary" @click.native='searchHotel'>查询</x-button>
     </router-link>
 
-<!--     <p class='testRouter'>
-      <router-link to="/myOrder">Login</router-link>
-      <router-link to="/">Index</router-link>
-    </p> -->
-
-
-<!--     <div>
-    qqq
-      <router-view></router-view>
-    </div> -->
-    
-
-<!--     <tab>
-      <tab-item selected @on-item-click="tabToggle">酒店预订</tab-item>
-      <tab-item @on-item-click="tabToggle">我的订单</tab-item>
-      <tab-item @on-item-click="tabToggle">我的信息</tab-item>
-    </tab> -->
 
   </div>
 </template>
 
 <script>
+
+// import 'http//at.alicdn.com/t/font_1473319176_4914331.js'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { Group,XInput,Icon,CellBox,Cell,Swiper, GroupTitle, SwiperItem, XButton, Divider,Flexbox,FlexboxItem,TransferDom, Popup,  XSwitch, Scroller, Toast, XAddress, Tab,TabItem,Checker,CheckerItem} from 'vux'
@@ -137,21 +153,7 @@ import axios from 'axios'
 import List from './list.vue'
 import datepicker from 'vue-date'
 
-// Vue.use(VueRouter)
-
-// const routes=[{
-//   path:'/',
-//   component:Test
-// },
-//   {
-//     path:'/myOrder',
-//     component:Test
-//   }
-// ]
-
-// const router=new VueRouter({
-//   routes
-// })
+// import 'http//at.alicdn.com/t/font_wgw0022ibpmpwrk9.css'
 
 const baseList = [{
   url: 'javascript:',
@@ -248,6 +250,10 @@ export default {
     showLeftPopup(){
       this.show8=true
     },
+    showRightPopup(){
+      console.log('dddx');
+      this.showInfo=true
+    },
     onItemClick (value, disabled) {
       console.log(value, disabled)
       if (!this.disabled) {
@@ -288,6 +294,7 @@ export default {
         demo5: 1,
         price:0,
         show8: false,
+        showInfo:false,
         problemList:"",
         testDate:'2016-09-08',
         dateRange:(function(){
@@ -330,8 +337,33 @@ export default {
 }
 </script>
 
-<style scoped >
+<style >
 /*@import '~vux/src/styles/reset.less';*/
+
+@font-face {
+  font-family: 'iconfont';  /* project id 322753 */
+  src: url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.eot');
+  src: url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.svg#iconfont') format('svg');
+}
+
+
+.iconfont{
+  font-family:"iconfont" !important;
+  font-size:18px;font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+    padding: 8px 6px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin:0 10px;
+
+}
+
+
 ul,li{
   list-style: none;
 }
@@ -469,14 +501,82 @@ button.weui-btn.weui-btn_primary {
     margin-top: 30px;
 }
 
+.vux-slider > .vux-swiper{
+  z-index:-1;
+}
+
+
+.input-wrapper[_v-6c618eea]{
+  border:0 !important;
+}
+
 /*.date-picker>div.input-wrapper{
    border:0 !important;
 }
 .input{
   height:auto !important;
 }*/
-.input-wrapper{
-  border:0;
+.form-wrapper{
+    /* border: 0; */
+    width: 88%;
+    /* text-align: center; */
+    margin: -10px auto;
+    z-index: 22;
+    /* border-radius: 10%; */
+    padding: 10px;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.vux-slider > .vux-swiper{
+  z-index:-1;
+}
+
+.date-title{
+  padding:0 10px;
+}
+
+.hotel-title{
+  padding:6px 0;
+  margin: 10px;
+}
+
+.page-title:first-child{
+  text-align: right;
+  padding-right:40px;
+}
+
+.vux-popup-dialog.vux-popup-right.vux-popup-show {
+    background: rgb(38,38,50);
+    color:rgb(212,212,212);
+}
+
+.phone-info{
+  width:100%;
+  height:120px;
+  background: rgb(52,51,69);
+  text-align: center;
+}
+.phone-info >p{
+  padding:30px 0 10px 0;
+}
+
+.phone-info>div{
+  border:1px solid #fff;
+  border-radius:4px;
+  padding:2px 10px;
+  display: inline-block;
+}
+
+
+.info-list{
+text-align:center;
+padding-top:40px;
+}
+.info-list li{
+  padding:4px ;
 }
 </style>
 

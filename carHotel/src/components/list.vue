@@ -3,7 +3,7 @@
 <!--     <group title="switch the type">
       <radio title="type" v-model="type" :options="['1', '2', '3']"></radio>
     </group> -->
-    <panel header="酒店列表" :footer="footer" :list="list" :type="type"></panel>
+    <panel header="酒店列表" :footer="footer" :list="list" :type="type" :rate='rate'></panel>
   </div>
 </template>
 
@@ -21,11 +21,13 @@ export default {
       list: [{
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题一',
+        rate:4.3,
         desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。',
         url: '/component/cell'
       }, {
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题二',
+        rate:4.3,
         desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。',
         url: {
           path: '/component/radio',
@@ -35,11 +37,13 @@ export default {
 		{
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题一',
+        rate:4.3,
         desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。',
         url: '/component/cell'
       }, {
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题二',
+        rate:4.3,
         desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。',
         url: {
           path: '/component/radio',
