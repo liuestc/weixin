@@ -2,24 +2,27 @@
   <div>
     <ul>
     	<li class="hotel-list" v-for='item in list'>
-    		<div class="hotel-img">
-    			<img :src='item.src' alt="">
-    		</div>
-    		<div class='hotel-info'>
-    			<div class="hotel-name">{{item.title}}</div>
-    			<div class="hotel-about">
-    				<span class='hotel-rate'>{{item.rate}}</span>| <span class='hotel-count'>{{item.rateCount}}条点评</span>
-    				<!-- <span ></span>	 -->
-    			</div>
-    			<div class="promotion">
-    				
-    			</div>
-    			<div class="hotel-distance">距离您{{item.distance}}</div>
-    			<div class="hotel-price">
-    				￥{{item.price}}起
-    			</div>
-    		</div>
+	    	<router-link :to="{name:'hotel',params:{id:item.id}}">
+	    		<div class="hotel-img">
+	    			<img :src='item.src' alt="">
+	    		</div>
+	    		<div class='hotel-info'>
+	    			<div class="hotel-name">{{item.title}}</div>
+	    			<div class="hotel-about">
+	    				<span class='hotel-rate'>{{item.rate}}</span>| <span class='hotel-count'>{{item.rateCount}}条点评</span>
+	    				<!-- <span ></span>	 -->
+	    			</div>
+	    			<div class="promotion">
+	    				
+	    			</div>
+	    			<div class="hotel-distance">距离您{{item.distance}}</div>
+	    			<div class="hotel-price">
+	    				￥{{item.price}}起
+	    			</div>
+	    		</div>
+	    	</router-link>
     	</li>
+
     </ul>
   </div>
 </template>
@@ -36,6 +39,7 @@ export default {
     return {
       type: '1',
       list: [{
+      	id:1,
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题一',
         rate:4.3,
@@ -46,6 +50,7 @@ export default {
         icon:['促','满减','可反'],
         url: '/component/cell'
       }, {
+      	id:2,
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题一',
         rate:4.3,
@@ -57,6 +62,7 @@ export default {
         url: '/component/cell'
       },
 		{
+		id:3,
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题一',
         rate:4.3,
@@ -67,6 +73,7 @@ export default {
         icon:['促','满减','可反'],
         url: '/component/cell'
       }, {
+      	id:4,
         src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
         title: '标题一',
         rate:4.3,
@@ -83,6 +90,9 @@ export default {
         url: 'http://vux.li'
       }
     }
+  },
+  mounted(){
+  	// console.log($route)
   }
 }
 </script>
@@ -90,6 +100,10 @@ export default {
 <style>
 	.hotel-list{
 		border-bottom: 1px solid #ccc; 
+		color:#000;
+	}
+	.hotel-list>a{
+		color:#000;
 	}
 	.hotel-img,.hotel-info{
 		display: inline-block;

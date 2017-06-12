@@ -578,6 +578,11 @@ padding-top:40px;
 .info-list li{
   padding:4px ;
 }
+
+.date-panel{
+  left:0;
+  right:0;
+}
 </style>
 
 

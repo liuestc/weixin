@@ -7,6 +7,7 @@ import App from './App'
 import Home from './components/HelloFromVux'
 import axios from 'axios'
 import List from './components/list.vue'
+import Hotel from './components/hotel.vue'
 
 Vue.use(VueRouter)
 
@@ -16,7 +17,12 @@ const routes = [{
 },{
 	path:'/myOrder',
 	component:List
-}]
+},{
+	name:'hotel',
+	path:'/hotel/:id',
+	component:Hotel
+}
+]
 
 const router = new VueRouter({
   routes
