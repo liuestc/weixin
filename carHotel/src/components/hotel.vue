@@ -33,11 +33,89 @@
                 <i class="icon iconfont">&#xe894;</i>
                     <div class="name">wifi</div>
                     <!-- <div class="code">&amp;#xe894;</div> -->
-                </li>
-            
-        </ul>
+                </li>           
+        	</ul>
+        	<router-link class="info-detailed" to='/hotelDetail'>详情</router-link>
   		</div>
-		<List></List>
+
+
+		<div class='info-bed' >
+			<!-- <> -->
+				<div>
+					<i class='icon iconfont'>&#xe888;</i>
+				</div>
+				<div class="info-desc">
+					<p class="info-type">标准间 <span class="info-price">￥666起</span></p>
+					<div class="info-more">
+						<span>双早</span>
+						<span>双床</span>
+						<span>含早餐</span>
+						<span>可住两人</span>
+					</div>
+				</div>
+				<div class="info-sell">
+					
+					<div class="info-order-btn">
+						<router-link to='/orderRoom'>预定</router-link>
+						<!-- <div></div> -->
+					</div>
+				</div>
+			<!-- </router-link>	 -->
+		</div>
+
+
+
+		<div class='info-bed'>
+			<div>
+				<i class='icon iconfont'>&#xe888;</i>
+			</div>
+			<div class="info-desc">
+				<p class="info-type">标准间 <span class="info-price">￥666起</span></p>
+				<div class="info-more">
+					<span>双早</span>
+					<span>双床</span>
+					<span>含早餐</span>
+					<span>可住两人</span>
+				</div>
+			</div>
+			<div class="info-sell">
+				
+				<div class="info-order-btn">
+					<div>预定</div>
+					<!-- <div></div> -->
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class='info-bed'>
+			<div>
+				<i class='icon iconfont'>&#xe888;</i>
+			</div>
+			<div class="info-desc">
+				<p class="info-type">标准间 <span class="info-price">￥666起</span></p>
+				<div class="info-more">
+					<span>双早</span>
+					<span>双床</span>
+					<span>含早餐</span>
+					<span>可住两人</span>
+				</div>
+			</div>
+			<div class="info-sell">
+				
+				<div class="info-order-btn">
+					<div>预定</div>
+					<!-- <div></div> -->
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<!-- <List></List> -->
   	</div>
   </div>
 </template>
@@ -90,32 +168,21 @@ export default {
 </script>
 
 <style>
-@font-face {
-  font-family: 'iconfont';  /* project id 322753 */
-  src: url('//at.alicdn.com/t/font_d7ofxc0ghqia4i.eot');
-  src: url('//at.alicdn.com/t/font_d7ofxc0ghqia4i.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_d7ofxc0ghqia4i.woff') format('woff'),
-  url('//at.alicdn.com/t/font_d7ofxc0ghqia4i.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_d7ofxc0ghqia4i.svg#iconfont') format('svg');
-}
-
-.iconfont{
-  font-family:"iconfont" !important;
-  font-size:16px;font-style:normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 
 .icon_lists .icon {
-    font-size: 30px;
-    line-height: 60px;
+    font-size: 20px;
+    line-height: 40px;
     margin: 10px 0;
     color: #333;
     -webkit-transition: font-size 0.25s ease-out 0s;
     -moz-transition: font-size 0.25s ease-out 0s;
     transition: font-size 0.25s ease-out 0s;
+}
+
+
+.info-support{
+	background: #fff;
+	position: relative;
 }
 
 .info-img>img{
@@ -139,11 +206,81 @@ export default {
 .icon_lists{
 	background: #fff;
 	margin:8px 0;
-	text-align: center;
+	/*text-align: center;*/
+	padding:0 10px;
+}
+
+.icon_lists{
+	display: inline-block;
 }
 .icon_lists>li{
 	display: inline-block;
 	padding:0 10px;
 	text-align: center;
+}
+
+.info-detailed{
+	position: absolute;
+	right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color:rgb(45,190,60);
+}
+.info-bed{
+	margin-top:10px;
+	background: #fff;
+	/*padding:10px 0;*/
+	padding: 10px 0 22px 0;
+}
+.info-bed>div{
+	display: inline-block;
+	vertical-align: middle;
+	    margin-left: 4px;
+
+}
+
+.info-bed i{
+	font-size: 48px;
+    /* line-height: 60px; */
+    padding: 10px 5px;
+}
+.info-type{
+	font-size:18px;
+	padding:4px;
+}
+
+.info-more>span{
+	font-size:12px;
+	color:#ccc;
+	display: inline-block;
+	padding:2px 4px;
+}
+.info-price{
+	font-size:16px;
+	color:red;
+	float:right;
+}
+
+.info-sell{
+	padding-left:20px;
+}
+.info-order-btn{
+	background-color:rgb(253,178,92);
+	color:#fff;
+	padding: 2px 12px;
+    border-radius: 4px;
+    position: relative;
+}
+.info-order-btn::after{
+    content: "\5728\7EBF\4ED8";
+    position: absolute;
+    bottom: -19px;
+    font-size: 12px;
+    color: #ccc;
+    text-align: center;
+    border: 2px solid rgb(253,178,92);
+    width: 92%;
+    left: 0;
+    border-radius: 4px;
 }
 </style>

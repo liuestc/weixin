@@ -8,6 +8,9 @@ import Home from './components/HelloFromVux'
 import axios from 'axios'
 import List from './components/list.vue'
 import Hotel from './components/hotel.vue'
+import HotelDetailed from './components/hotelDetailed.vue'
+import OrderRoom from './components/order.vue'
+import Confirm from './components/confirm.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +24,15 @@ const routes = [{
 	name:'hotel',
 	path:'/hotel/:id',
 	component:Hotel
+},{
+	path:'/hotelDetail',
+	component:HotelDetailed
+},{
+	path:"/orderRoom",
+	component:OrderRoom
+},{
+	path:'/confirm',
+	component:Confirm
 }
 ]
 
