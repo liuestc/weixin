@@ -279,7 +279,7 @@ export default {
     color: #ccc;
     text-align: center;
     border: 2px solid rgb(253,178,92);
-    width: 92%;
+    width: 93%;
     left: 0;
     border-radius: 4px;
 }

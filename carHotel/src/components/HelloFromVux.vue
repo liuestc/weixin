@@ -3,8 +3,8 @@
   
 
       <flexbox class='hotel-title'>
-        <flexbox-item class='page-title'> 汽车驿站</flexbox-item>
-        <flexbox-item class='page-title' :span='1/3'  @click='showRightPopup'><i  @click='showRightPopup' class="iconfont">&#xe6e2;</i><span @click='showRightPopup'>我的</span></flexbox-item>        
+        <flexbox-item class='page-title' > 汽车驿站</flexbox-item>
+        <flexbox-item class='page-title'  @click='showRightPopup'><i  @click='showRightPopup' class="iconfont">&#xe6e2;</i><span @click='showRightPopup'>我的</span></flexbox-item>        
       </flexbox>
 
 
@@ -281,7 +281,9 @@ export default {
       console.log("father")
     },
     searchHotel(){
-      window.location
+      // window.location
+      window.localStorage.setItem("range",this.dateRange)
+      window.localStorage.setItem("subtract",this.subtractTime)
     },
     tabToggle(index){
       console.log(index)
@@ -416,22 +418,21 @@ ul,li{
 }
 .price-item{
   text-align: center;
-
-  padding:4px;
-  margin-left:6px;
+  padding:4px 10px;
+  margin-left:20px;
   margin-top:10px;
 
 }
 
 .demo5-item {
-  width: 100px;
+  /*width: 100px;*/
   height: 26px;
   line-height: 26px;
   text-align: center;
   border-radius: 3px;
   border: 1px solid #ccc;
   background-color: #fff;
-  margin-right: 6px;
+  /*margin-right: 6px;*/
   color:#333;
 }
 .demo5-item-selected {
@@ -539,8 +540,8 @@ button.weui-btn.weui-btn_primary {
 }
 
 .hotel-title{
-  padding:6px 0;
-  margin: 10px;
+  padding:10px 0;
+  /*margin: 10px;*/
 }
 
 .page-title:first-child{
