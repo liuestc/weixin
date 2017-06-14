@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='app-wrapper' v-bind:class='{activemask:mask}'>
   
 
       <flexbox class='hotel-title'>
@@ -17,7 +17,7 @@
     <div class="form-wrapper">
 
       <flexbox class='flex-init'>
-        <flexbox-item :span="2">
+        <flexbox-item :span="3">
           <div class="flex-title">
             目的地
           </div>
@@ -42,8 +42,8 @@
         <flexbox-item>
             <flexbox >
               <flexbox-item class='date-picker'>
-                <div>    
-                  <datepicker v-model="dateRange" :range="rangeType"></datepicker>
+                <div v-on:click='checkDate($event)'>    
+                  <datepicker class='picker' v-model="dateRange" :range="rangeType" v-on:click='checkDate'></datepicker>
                 </div>
               </flexbox-item>
             </flexbox>
@@ -287,12 +287,37 @@ export default {
     },
     tabToggle(index){
       console.log(index)
+    },
+    checkDate(eve){
+      console.log("datepickere")
+      // console.log(eve.target.parentNode.parentNode.lastChild.style.display);
+      let panelActive=eve.target.parentNode.parentNode.lastChild;
+      console.log("display",panelActive.style.display)
+      console.log("class",panelActive.className)
+
+      console.log("panelActive",eve.target.parentNode.parentNode.lastChild)
+      console.log("-----")
+
+      if(panelActive.className=='date-panel' && panelActive.style.display=='none'){
+        this.mask=true
+      }
+      else{
+        this.mask=false
+      }
+      // if( panelActive.className=!'message'&& !panelActive.style){
+      //  this.mask=false
+      // }
+      // else{
+
+      //  this.mask=true
+      // }
+
     }
 },
   data () {
     return {
-      demo03_list: demoList,
-       show2: false,
+        demo03_list: demoList,
+        show2: false,
         demo5: 1,
         price:0,
         show8: false,
@@ -323,7 +348,8 @@ export default {
           return [startTime,endTime]
         })(),
 
-        rangeType:true
+        rangeType:true,
+        mask:false
         //subtractTime:1
     }
   },
@@ -365,6 +391,15 @@ export default {
 
 }
 
+
+.app-wrapper{
+  height:100vh;
+}
+
+.activemask{
+  background: rgba(0,0,0,.5);
+  /*color:red;*/
+}
 
 ul,li{
   list-style: none;
@@ -507,7 +542,7 @@ button.weui-btn.weui-btn_primary {
 }
 
 
-.input-wrapper[_v-6c618eea]{
+.input-wrapper{
   border:0 !important;
 }
 
@@ -580,9 +615,24 @@ padding-top:40px;
   padding:4px ;
 }
 
-.date-panel{
-  left:0;
-  right:0;
+.input-wrapper+div.date-panel{
+    position: absolute;
+    z-index: 5000;
+    border: 1px solid #eee;
+    width: 88vw;
+    /* padding: 5px 10px 10px; */
+    box-sizing: border-box;
+    background-color: #fff;
+    /* -webkit-transform: translateY(4px); */
+    /* transform: translateY(4px); */
+    left: -10px;
+
+}
+
+.vux-flexbox-item.date-title{
+  font-size:12px;
+  color:#ccc;
+  padding-top:6px;
 }
 </style>
 
