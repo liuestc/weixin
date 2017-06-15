@@ -102,7 +102,7 @@ export default {
 }
 
 .order-btn{
-  position: absolute;
+  position: fixed;
   bottom:0;
   width:100%;
   font-size:0;

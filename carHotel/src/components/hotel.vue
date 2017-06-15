@@ -170,7 +170,7 @@ export default {
 <style>
 
 .icon_lists .icon {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 40px;
     margin: 10px 0;
     color: #333;
@@ -240,7 +240,7 @@ export default {
 }
 
 .info-bed i{
-	font-size: 48px;
+	font-size: 42px;
     /* line-height: 60px; */
     padding: 10px 5px;
 }

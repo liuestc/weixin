@@ -214,7 +214,7 @@ export default {
     datepicker
   },
   created () {
-    console.log(11111)
+    // console.log(11111)
     var that=this;
     console.log(that.problemList)
     axios.get('http://localhost:8080/api/test')
@@ -289,28 +289,51 @@ export default {
       console.log(index)
     },
     checkDate(eve){
-      console.log("datepickere")
+      // console.log("datepickere")
       // console.log(eve.target.parentNode.parentNode.lastChild.style.display);
       let panelActive=eve.target.parentNode.parentNode.lastChild;
-      console.log("display",panelActive.style.display)
+      console.log("display",panelActive.style.display+"")
       console.log("class",panelActive.className)
 
       console.log("panelActive",eve.target.parentNode.parentNode.lastChild)
       console.log("-----")
+      var i=0
+
+      // if(panelActive.style.display==''){
+      //   console.log("33333444@@@@")
+      //   this.mask=false
+      //   console.log("遮罩",this.mask)
+      // }
 
       if(panelActive.className=='date-panel' && panelActive.style.display=='none'){
         this.mask=true
-      }
-      else{
-        this.mask=false
-      }
-      // if( panelActive.className=!'message'&& !panelActive.style){
-      //  this.mask=false
-      // }
-      // else{
 
-      //  this.mask=true
+        // if(panelActive.style.display=='none'){
+        //   this.mask=true
+        // }
+        
+        // if(panelActive.style.display==''){
+        //   // this.mask=
+        // }
+      }
+
+      // else if(panelActive.className=='date-panel' && panelActive.style.display==''){
+      //   this.mask=true
       // }
+
+
+      else{
+        console.log("testDate",this.countClick)
+        this.countClick++
+        if(this.countClick==2){
+          console.log("!!!!")
+          this.mask=false
+          this.countClick=0
+        }
+
+        console.log("hahhah")
+        
+      }
 
     }
 },
@@ -349,7 +372,8 @@ export default {
         })(),
 
         rangeType:true,
-        mask:false
+        mask:false,
+        countClick:0
         //subtractTime:1
     }
   },
@@ -565,6 +589,9 @@ button.weui-btn.weui-btn_primary {
     border-radius: 10px;
     background: #fff;
 }
+.vux-slider{
+    height:120px;
+}
 
 .vux-slider > .vux-swiper{
   z-index:-1;
@@ -608,11 +635,17 @@ button.weui-btn.weui-btn_primary {
 
 
 .info-list{
-text-align:center;
-padding-top:40px;
+  text-align:center;
+  padding-top:40px;
 }
 .info-list li{
-  padding:4px ;
+    width: 40%;
+    padding: 4px;
+    border-bottom: 1px solid #ccc;
+    margin: 0 auto;
+    box-shadow: 0px 0px 6px -1px #ddd;
+    border-radius: 2px;
+    margin-top: 20px;
 }
 
 .input-wrapper+div.date-panel{
@@ -625,7 +658,7 @@ padding-top:40px;
     background-color: #fff;
     /* -webkit-transform: translateY(4px); */
     /* transform: translateY(4px); */
-    left: -10px;
+    left: -12px;
 
 }
 
