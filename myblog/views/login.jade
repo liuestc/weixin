@@ -4,4 +4,13 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    
+  - if (isLogined)
+    p #{name} 
+    a(href='/logout')退出登录
+  - else 
+  form(method='POST' action='/login')
+  input(type="text" id="name" name="name" value="chyingp" )
+  input(type="password" id="password" name="password" value="123456" )
+  input(type="submit" value="登录" id="login" )
+  script(src='https://cdn.bootcss.com/jquery/3.2.1/jquery.js')
+  script(src='js/login.js')

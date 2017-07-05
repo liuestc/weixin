@@ -25,7 +25,7 @@ var app = express();
 // app.set('views', path.join(__dirname, 'views'));
 app.set('views', __dirname + '/views');
 
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
 
 
 
@@ -102,7 +102,7 @@ app.post('/login', function(req, res, next){
                 return res.json({ret_code: 2, ret_msg: '登录失败'});                
             }
             
-            req.session.loginUser = user.name;
+            req.session.loginUser = user.name; //session 中写入loginUser
             res.json({ret_code: 0, ret_msg: '登录成功'});                           
         });
     }else{
@@ -140,15 +140,15 @@ app.get('/logout', function(req, res, next){
 
 
 app.get('/login', function(req, res, next){
-    // var sess = req.session;
-    // var loginUser = sess.loginUser;
-    // var isLogined = !!loginUser;
+    var sess = req.session;
+    var loginUser = sess.loginUser;
+    var isLogined = !!loginUser;
 
-    res.render('login')
-    // res.render('login', {
-    //     isLogined: isLogined,
-    //     name: loginUser || ''
-    // });
+    // res.render('login')
+    res.render('login', {
+        isLogined: isLogined,
+        name: loginUser || ''
+    });
 });
 
 
