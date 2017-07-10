@@ -1,66 +1,70 @@
 <template>
-  <div>
-    <div class="">
+  <div class='app-wrapper' v-bind:class='{activemask:mask}'>
+  
+
+      <flexbox class='hotel-title'>
+        <flexbox-item class='page-title' > 汽车驿站</flexbox-item>
+        <flexbox-item class='page-title'  @click='showRightPopup'><i  @click='showRightPopup' class="iconfont">&#xe6e2;</i><span @click='showRightPopup'>我的</span></flexbox-item>        
+      </flexbox>
+
+
+    <div class="swiper-wrapper">
       <!-- <group-title>自动轮播</group-title> -->
       <swiper :list="demo03_list" auto style="width:100%;margin:0 auto;" height="180px" dots-class="custom-bottom" dots-position="center"></swiper>
     </div>
 
 
-    <flexbox class='flex-init'>
-      <flexbox-item :span="2">
-        <div class="flex-title">
-          目的地
+    <div class="form-wrapper">
+
+      <flexbox class='flex-init'>
+        <flexbox-item :span="3">
+          <div class="flex-title">
+            目的地
+          </div>
+        </flexbox-item>
+        <flexbox-item>
+          <div class="">
+            <x-input title="" name="username" placeholder="四川成都市武侯"></x-input>
+          </div>
+        </flexbox-item>
+        <flexbox-item :span="2">
+          <div class="">></div>
+        </flexbox-item>
+      </flexbox>
+
+      <flexbox>
+        <flexbox-item class='date-title' :span='1/5'>入住</flexbox-item>
+        <flexbox-item class='date-title' :span='1/5'>离店</flexbox-item>        
+      </flexbox>
+
+      <flexbox class='flex-init' >
+
+        <flexbox-item>
+            <flexbox >
+              <flexbox-item class='date-picker'>
+                <div v-on:click='checkDate($event)'>    
+                  <datepicker class='picker' v-model="dateRange" :range="rangeType" v-on:click='checkDate'></datepicker>
+                </div>
+              </flexbox-item>
+            </flexbox>
+
+        </flexbox-item>
+        <flexbox-item :span="1/5">
+          <div class="">共{{subtractTime}}晚</div>
+        </flexbox-item>
+      </flexbox>
+
+      <group gutter='0'>
+        <div>
+          <x-input title="" @on-focus='showLeftPopup'   name='eee'  placeholder="位置/关键字/品牌/酒店"></x-input>
         </div>
-      </flexbox-item>
-      <flexbox-item>
-        <div class="">
-          <x-input title="" name="username" placeholder="四川成都市武侯"></x-input>
-        </div>
-      </flexbox-item>
-      <flexbox-item :span="2">
-        <div class="">></div>
-      </flexbox-item>
-    </flexbox>
-
-
-    <flexbox class='flex-init'>
-      <flexbox-item :span="1/6">
-        <div class="flex-title">
-          日期
-        </div>
-      </flexbox-item>
-      <flexbox-item>
-        <div class="">
-          <flexbox direction="column">
-            <flexbox-item class='date-picker'>
-              <div>                   
-                <x-input title="" name="ww" placeholder="5月25日"></x-input>
-              </div>
-            </flexbox-item>
-            <flexbox-item class='date-picker'>
-              <div>                   
-                <x-input title="" name="we" placeholder="5月25日"></x-input>
-              </div>
-            </flexbox-item>
-          </flexbox>
-        </div>
-      </flexbox-item>
-      <flexbox-item :span="1/6">
-        <div class="">共一晚</div>
-      </flexbox-item>
-    </flexbox>
-
-    <group gutter='0'>
-      <div>
-        <x-input title="" @on-focus='showLeftPopup'   name='eee'  placeholder="位置/关键字/品牌/酒店"></x-input>
-      </div>
-    </group>
-
-
-      <group @click='showPopup' gutter='0'>
-         <x-input title="" v-model='price' @on-focus='showPopup' name='eee'  placeholder="星级/价格"></x-input>
       </group>
 
+
+        <group @click='showPopup' gutter='0'>
+           <x-input title="" v-model='price' @on-focus='showPopup' name='eee'  placeholder="星级/价格"></x-input>
+        </group>
+    </div>
 
 
     <div v-transfer-dom>
@@ -106,17 +110,51 @@
       </popup>
     </div>
 
-    <group>
+
+
+    <div v-transfer-dom class='right-info'>
+      <popup v-model="showInfo" position="right" width="50%">
+        <div class="position-horizontal-demo">
+          <span class="vux-close" @click="showInfo = false"></span>
+
+          <div class="phone-info">
+            <p>123456789</p>
+            <div>退出</div>
+          </div>
+
+          <div class="info-list">
+            <ul>
+              <li><i></i><span>订单管理</span></li>
+              <li><i></i><span>我的信息</span></li>
+            </ul>
+          </div>
+            
+        </div>
+      </popup>
+    </div>
+<!--     <group>
       <Test v-on:test='father'></Test>
-    </group>
+    </group> -->
+    <router-link to="/myOrder">
+      <x-button type="primary" @click.native='searchHotel'>查询</x-button>
+    </router-link>
+
+
   </div>
 </template>
 
 <script>
+
+// import 'http//at.alicdn.com/t/font_1473319176_4914331.js'
 import Vue from 'vue'
-import { Group,XInput,Icon,CellBox,Cell,Swiper, GroupTitle, SwiperItem, XButton, Divider,Flexbox,FlexboxItem,TransferDom, Popup,  XSwitch, Scroller, Toast, XAddress,    Checker,CheckerItem} from 'vux'
+import VueRouter from 'vue-router'
+import { Group,XInput,Icon,CellBox,Cell,Swiper, GroupTitle, SwiperItem, XButton, Divider,Flexbox,FlexboxItem,TransferDom, Popup,  XSwitch, Scroller, Toast, XAddress, Tab,TabItem,Checker,CheckerItem} from 'vux'
 import axios from 'axios'
-import Test from './test.vue'
+import List from './list.vue'
+import datepicker from 'vue-date'
+
+// import 'http//at.alicdn.com/t/font_wgw0022ibpmpwrk9.css'
+
 const baseList = [{
   url: 'javascript:',
   img: 'https://static.vux.li/demo/1.jpg',
@@ -170,10 +208,13 @@ export default {
     XButton,
     CheckerItem,
     Checker,
-    Test
+    List,
+    Tab,
+    TabItem,
+    datepicker
   },
   created () {
-    console.log(11111)
+    // console.log(11111)
     var that=this;
     console.log(that.problemList)
     axios.get('http://localhost:8080/api/test')
@@ -209,6 +250,10 @@ export default {
     showLeftPopup(){
       this.show8=true
     },
+    showRightPopup(){
+      console.log('dddx');
+      this.showInfo=true
+    },
     onItemClick (value, disabled) {
       console.log(value, disabled)
       if (!this.disabled) {
@@ -234,30 +279,155 @@ export default {
 
     father(){
       console.log("father")
-    }
+    },
+    searchHotel(){
+      // window.location
+      window.localStorage.setItem("range",this.dateRange)
+      window.localStorage.setItem("subtract",this.subtractTime)
+    },
+    tabToggle(index){
+      console.log(index)
+    },
+    checkDate(eve){
+      // console.log("datepickere")
+      // console.log(eve.target.parentNode.parentNode.lastChild.style.display);
+      let panelActive=eve.target.parentNode.parentNode.lastChild;
+      console.log("display",panelActive.style.display+"")
+      console.log("class",panelActive.className)
 
-  },
+      console.log("panelActive",eve.target.parentNode.parentNode.lastChild)
+      console.log("-----")
+      var i=0
+
+      // if(panelActive.style.display==''){
+      //   console.log("33333444@@@@")
+      //   this.mask=false
+      //   console.log("遮罩",this.mask)
+      // }
+
+      if(panelActive.className=='date-panel' && panelActive.style.display=='none'){
+        this.mask=true
+
+        // if(panelActive.style.display=='none'){
+        //   this.mask=true
+        // }
+        
+        // if(panelActive.style.display==''){
+        //   // this.mask=
+        // }
+      }
+
+      // else if(panelActive.className=='date-panel' && panelActive.style.display==''){
+      //   this.mask=true
+      // }
+
+
+      else{
+        console.log("testDate",this.countClick)
+        this.countClick++
+        if(this.countClick==2){
+          console.log("!!!!")
+          this.mask=false
+          this.countClick=0
+        }
+
+        console.log("hahhah")
+        
+      }
+
+    }
+},
   data () {
     return {
-      demo03_list: demoList,
-       show2: false,
+        demo03_list: demoList,
+        show2: false,
         demo5: 1,
         price:0,
         show8: false,
-        problemList:""
+        showInfo:false,
+        problemList:"",
+        testDate:'2016-09-08',
+        dateRange:(function(){
+        //默认显示今天明天
+          Date.prototype.Format = function (fmt) { //author: meizz 
+              var o = {
+                  "M+": this.getMonth() + 1, //月份 
+                  "d+": this.getDate(), //日 
+                  "h+": this.getHours(), //小时 
+                  "m+": this.getMinutes(), //分 
+                  "s+": this.getSeconds(), //秒 
+                  "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                  "S": this.getMilliseconds() //毫秒 
+              };
+              if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+              for (var k in o)
+              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+              return fmt;
+          }
+          var startTime = new Date().Format("yyyy-MM-dd");
+          var endTime = new Date(Date.now()+24*60*60*1000).Format("yyyy-MM-dd");
+
+          console.log("startTime",startTime)
+          return [startTime,endTime]
+        })(),
+
+        rangeType:true,
+        mask:false,
+        countClick:0
+        //subtractTime:1
+    }
+  },
+  computed:{
+    subtractTime (){
+      let startTime=this.dateRange[0].split("-").join("/");
+      let endTime=this.dateRange[1].split("-").join("/")
+      let time=(new Date(endTime)-new Date(startTime))/(1000*60*60*24)
+      return time
     }
   }
+
 }
 </script>
 
-<style scoped lang='less'>
-/*@import '~vux/src/styles/reset.less'*/
-@import '~vux/src/styles/close.less';
+<style >
+/*@import '~vux/src/styles/reset.less';*/
+
+@font-face {
+  font-family: 'iconfont';  /* project id 322753 */
+  src: url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.eot');
+  src: url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_wgw0022ibpmpwrk9.svg#iconfont') format('svg');
+}
+
+
+.iconfont{
+  font-family:"iconfont" !important;
+  font-size:18px;font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+    padding: 8px 6px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin:0 10px;
+
+}
+
+
+.app-wrapper{
+  height:100vh;
+}
+
+.activemask{
+  background: rgba(0,0,0,.5);
+  /*color:red;*/
+}
 
 ul,li{
   list-style: none;
 }
-
 .group-init{
   margin-top:0;
 }
@@ -307,9 +477,8 @@ ul,li{
 }
 .price-item{
   text-align: center;
-
-  padding:4px;
-  margin-left:6px;
+  padding:4px 10px;
+  margin-left:20px;
   margin-top:10px;
 
 }
@@ -321,7 +490,7 @@ ul,li{
   border-radius: 3px;
   border: 1px solid #ccc;
   background-color: #fff;
-  margin-right: 6px;
+  /*margin-right: 6px;*/
   color:#333;
 }
 .demo5-item-selected {
@@ -383,6 +552,119 @@ ul,li{
 .activeul{
   /*border:1px solid green;*/
   background: #ccc;
+}
+
+
+button.weui-btn.weui-btn_primary {
+    width: 88%;
+    margin-top: 30px;
+}
+
+.vux-slider > .vux-swiper{
+  z-index:-1;
+}
+
+
+.input-wrapper{
+  border:0 !important;
+}
+
+/*.date-picker>div.input-wrapper{
+   border:0 !important;
+}
+.input{
+  height:auto !important;
+}*/
+.form-wrapper{
+    /* border: 0; */
+    width: 88%;
+    /* text-align: center; */
+    margin: -10px auto;
+    z-index: 22;
+    /* border-radius: 10%; */
+    padding: 10px;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #fff;
+}
+.vux-slider{
+    height:120px;
+}
+
+.vux-slider > .vux-swiper{
+  z-index:-1;
+}
+
+.date-title{
+  padding:0 10px;
+}
+
+.hotel-title{
+  padding:10px 0;
+  /*margin: 10px;*/
+}
+
+.page-title:first-child{
+  text-align: right;
+  padding-right:40px;
+}
+
+.vux-popup-dialog.vux-popup-right.vux-popup-show {
+    background: rgb(38,38,50);
+    color:rgb(212,212,212);
+}
+
+.phone-info{
+  width:100%;
+  height:120px;
+  background: rgb(52,51,69);
+  text-align: center;
+}
+.phone-info >p{
+  padding:30px 0 10px 0;
+}
+
+.phone-info>div{
+  border:1px solid #fff;
+  border-radius:4px;
+  padding:2px 10px;
+  display: inline-block;
+}
+
+
+.info-list{
+  text-align:center;
+  padding-top:40px;
+}
+.info-list li{
+    width: 40%;
+    padding: 4px;
+    border-bottom: 1px solid #ccc;
+    margin: 0 auto;
+    box-shadow: 0px 0px 6px -1px #ddd;
+    border-radius: 2px;
+    margin-top: 20px;
+}
+
+.input-wrapper+div.date-panel{
+    position: absolute;
+    z-index: 5000;
+    border: 1px solid #eee;
+    width: 88vw;
+    /* padding: 5px 10px 10px; */
+    box-sizing: border-box;
+    background-color: #fff;
+    /* -webkit-transform: translateY(4px); */
+    /* transform: translateY(4px); */
+    left: -12px;
+
+}
+
+.vux-flexbox-item.date-title{
+  font-size:12px;
+  color:#ccc;
+  padding-top:6px;
 }
 </style>
 
