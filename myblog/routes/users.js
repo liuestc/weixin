@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+	res.cookie('remember', 1, { maxAge: 60000 })
   res.send('respond with a resource');
 });
 
