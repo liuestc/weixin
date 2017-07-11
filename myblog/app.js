@@ -3,6 +3,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
 var bodyParser = require('body-parser');
 var session = require('express-session')
 
@@ -62,8 +64,6 @@ app.use(session({
 
 }))
 
-// app.use('/', index);
-// app.use('/users', users);
 app.use('/save',saveData)
 
 app.use('/cookie',function(req,res){
@@ -187,6 +187,7 @@ app.use(function(req, res, next) {
 
 
 
+<<<<<<< HEAD
 
 
 // app.use('/route1',route1)
@@ -194,6 +195,8 @@ app.use(function(req, res, next) {
 
 
 
+=======
+>>>>>>> 147d56fa8ffd41c3c6a895103b50487411c35d0e
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

@@ -484,7 +484,6 @@ ul,li{
 }
 
 .demo5-item {
-  /*width: 100px;*/
   height: 26px;
   line-height: 26px;
   text-align: center;
