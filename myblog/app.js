@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
 
+
+const request = require("request")
+
 //  将session存文件
 var FileStore = require('session-file-store')(session);
 
@@ -152,6 +155,29 @@ app.get('/login', function(req, res, next){
 });
 
 
+app.get('/onLogin',function(req,res,next){
+  console.log("onLogin 接口访问成功")
+  // console.log("req code",req)
+  let JSCODE=req.query.code
+  let appid='wxbc2c393716c2732b'
+  let secret='afbf41eff4904c53875e351eb33f067c'
+  let wechatUrl="https://api.weixin.qq.com/sns/jscode2session?appid="+appid+"&secret="+secret+"&js_code="+JSCODE+"&grant_type=authorization_code"
+  let grant_type='authorization_code'
+  console.log(JSCODE)
+  request(wechatUrl,(err,response,body)=>{
+    // console.log(response)
+    let data=JSON.parse(body)
+    console.log(data)
+    res.set({
+      "Access-Control-Allow-Origin": "*"
+      ,"Access-Control-Allow-Methods": "POST,GET"
+      ,"Access-Control-Allow-Credentials": "true"
+    });
+    res.json(data)
+  })
+  // res.send("hahhah")
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -161,6 +187,9 @@ app.use(function(req, res, next) {
 
 
 
+
+
+// app.use('/route1',route1)
 
 
 
