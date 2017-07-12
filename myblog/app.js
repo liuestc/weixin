@@ -15,14 +15,23 @@ const request = require("request")
 var FileStore = require('session-file-store')(session);
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 
 
-var saveData=require('./mongo/connect.js')
+// var saveData=require('./mongo/user.js')
+
 
 
 var userLogin = require('./user').items;
 
+/*微信部分*/
+
+var insert=require('./model/insert.js')
+var find=require("./model/find.js")
+
+
+
+/*微信部分结束*/
 
 var app = express();
 
@@ -64,7 +73,7 @@ app.use(session({
 
 }))
 
-app.use('/save',saveData)
+// app.use('/save',saveData)
 
 app.use('/cookie',function(req,res){
 	if(req.cookies.isVisited){
@@ -178,6 +187,55 @@ app.get('/onLogin',function(req,res,next){
   // res.send("hahhah")
 })
 
+
+
+app.get('/test',function(req,res,next){
+  res.json({
+    msg:"1"
+  })
+})
+
+
+
+/*微信小程序测试逻辑*/
+app.get("/wechat/login",function(req,res,next){
+  console.log(123)
+  // insert({
+  //   username:"ljd111",
+  //   psw:'oooooo'
+  // })
+  // insert()
+  let user=req.query
+  console.log("带过来的参数",user)
+  // console.log(insert.toString())
+  if(user){
+    res.set({
+      "Access-Control-Allow-Origin": "*"
+      ,"Access-Control-Allow-Methods": "POST,GET"
+      ,"Access-Control-Allow-Credentials": "true"
+    });
+
+    // let findResult=find(user.username)
+    // console.log("上面是find结果",findResult)
+
+
+   let insertResult=insert({
+          username:user.userName,
+          psw:user.psw
+    })
+    console.log('insertResult',insertResult)
+    res.json({
+      status:1
+    })
+  }
+})
+
+
+/*小程序测试逻辑end*/
+
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -187,16 +245,6 @@ app.use(function(req, res, next) {
 
 
 
-<<<<<<< HEAD
-
-
-// app.use('/route1',route1)
-
-
-
-
-=======
->>>>>>> 147d56fa8ffd41c3c6a895103b50487411c35d0e
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
