@@ -1,20 +1,21 @@
 var User = require("../mongo/user.js");
 
-function getByConditions(name){
-    var wherestr = {'username' : name};
-    let msg={}
-    User.find(wherestr, function(err, res){
-        if (err) {
-            console.log("Error:" + err);
-            msg.success=false
-        }
-        else {
-            console.log("Res:" + res);
-            msg.success=false
-        }
-    })
+function findName(name){
+
+	return new Promise((resolve,reject)=>{
+		var wherestr = {'username' : name};
+	    User.find(wherestr, function(err, res){
+	        if (err) {
+	            console.log("Error:" + err);
+	        }
+	        else {
+	            console.log("Res:" + res);
+	            resolve(res)
+	        }
+	    })
+	})
 }
 
-// getByConditions();
+// find();
 
-module.exports=getByConditions
+module.exports=findName

@@ -27,7 +27,7 @@ var userLogin = require('./user').items;
 /*微信部分*/
 
 var insert=require('./model/insert.js')
-var find=require("./model/find.js")
+var findName=require("./model/find.js")
 
 
 
@@ -198,13 +198,15 @@ app.get('/test',function(req,res,next){
 
 
 /*微信小程序测试逻辑*/
+
+/*登录逻辑
+1. 数据库查重
+2. 如果没有重复则插入，有重复返回已经注册
+
+*/
+
 app.get("/wechat/login",function(req,res,next){
   console.log(123)
-  // insert({
-  //   username:"ljd111",
-  //   psw:'oooooo'
-  // })
-  // insert()
   let user=req.query
   console.log("带过来的参数",user)
   // console.log(insert.toString())
@@ -215,18 +217,59 @@ app.get("/wechat/login",function(req,res,next){
       ,"Access-Control-Allow-Credentials": "true"
     });
 
+    findName(req.query.userName).then((response)=>{
+      console.log("find结果",response.length)
+      if(!response.length){
+        //可以插入
+        insert({
+            username:user.userName,
+            psw:user.psw
+         }).then((response)=>{
+            console.log("promise对象",response)
+            res.json({
+              msg:"插入成功",
+              status:1
+            })
+        })
+      }
+      else{
+        res.json({
+          msg:"该用户已被注册",
+          status:0
+        })
+      }
+    })
+
+
     // let findResult=find(user.username)
     // console.log("上面是find结果",findResult)
 
+   // let insertResult=insert({
+   //        username:user.userName,
+   //        psw:user.psw
+   //  },(err,data)=>{
+   //    if(err){
+   //      console.log(err)
+   //    }
+   //    else{
+   //      console.log("我是data",data)
+   //    res.json({
+   //      status:data
+   //    })
 
-   let insertResult=insert({
-          username:user.userName,
-          psw:user.psw
-    })
-    console.log('insertResult',insertResult)
-    res.json({
-      status:1
-    })
+   //    }
+   //  })
+
+   /*分割线*/
+
+   // insert({
+   //    username:user.userName,
+   //    psw:user.psw
+   // }).then((response)=>{
+   //    console.log("promise对象",response)
+   //    res.json(response)
+   // })
+
   }
 })
 
