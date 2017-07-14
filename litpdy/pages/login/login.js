@@ -6,7 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userVal:""
+    userVal:"",
+    alert:'',
+    msg:""
   },
 
 
@@ -89,8 +91,23 @@ Page({
         psw
       },
       success:function(res){
-        console.log(res)
-      },
+        console.log(res.data.status)
+        if(!res.data.status){
+          console.log("该用户名已经被注册");
+          // this.msg = res.data.msg
+          this.setData({
+            msg:res.data.msg,
+            alert:"alert"
+          })
+          setTimeout(function(){
+            this.setData({
+              msg: "",
+              alert: ""
+            })
+          }.bind(this),1000)
+          console.log(this.msg);
+        }
+      }.bind(this),
       fail:function(err){
         console.log("请求错误，网络原因")
         console.log(err)

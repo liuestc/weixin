@@ -1,0 +1,5 @@
+<!--blog.wxml-->
+<text>blog.wxml</text>
+<view class="blog-container">
+这里是blog
+</view>

@@ -11,7 +11,7 @@ App({
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'https://25eecc9a.ngrok.io/onLogin',
+            url: 'http://127.0.0.1:8080/onLogin',
             data: {
               code: res.code
             },
@@ -19,8 +19,8 @@ App({
               console.log(response.data)
               var oppenid = response.data.oppenid
               var session_key= response.data.session_key
-              window.localStorage.setItem("openid",openid)
-              window.localStorage.setItem("session_key", session_key)
+              // window.localStorage.setItem("openid",openid)
+              // window.localStorage.setItem("session_key", session_key)
             }
           })
         } else {

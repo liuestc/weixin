@@ -101,7 +101,7 @@ app.use('/session',function(req,res){
 })
 
 
-
+/*测试session开始*/
 
 app.post('/login', function(req, res, next){
     
@@ -164,6 +164,9 @@ app.get('/login', function(req, res, next){
 });
 
 
+/*测试session结束*/
+
+
 app.get('/onLogin',function(req,res,next){
   console.log("onLogin 接口访问成功")
   // console.log("req code",req)
@@ -184,7 +187,6 @@ app.get('/onLogin',function(req,res,next){
     });
     res.json(data)
   })
-  // res.send("hahhah")
 })
 
 
@@ -230,6 +232,10 @@ app.get("/wechat/login",function(req,res,next){
               msg:"插入成功",
               status:1
             })
+        wx.reLaunch({
+          url: '/page/blog'
+        })
+
         })
       }
       else{
