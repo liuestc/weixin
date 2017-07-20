@@ -166,6 +166,10 @@ app.get('/login', function(req, res, next){
 
 /*测试session结束*/
 
+// 获取用户opeenid
+// 插入到数据录里面
+//  注册的时候再对应起来
+
 
 app.get('/onLogin',function(req,res,next){
   console.log("onLogin 接口访问成功")
@@ -205,6 +209,10 @@ app.get('/test',function(req,res,next){
 1. 数据库查重
 2. 如果没有重复则插入，有重复返回已经注册
 
+自动登录 
+用户进入页面判断openid是否在数据库中，
+如果在跳转信息展示页，如果不在跳转注册页
+
 */
 
 app.get("/wechat/login",function(req,res,next){
@@ -225,16 +233,14 @@ app.get("/wechat/login",function(req,res,next){
         //可以插入
         insert({
             username:user.userName,
-            psw:user.psw
+            psw:user.psw,
+            openid:user.openid
          }).then((response)=>{
             console.log("promise对象",response)
             res.json({
-              msg:"插入成功",
+              msg:"register success",
               status:1
             })
-        wx.reLaunch({
-          url: '/page/blog'
-        })
 
         })
       }

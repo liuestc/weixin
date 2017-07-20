@@ -49,7 +49,8 @@ function insert(data){
 	        username : data.username,                 //用户账号
 	        userpwd: data.psw,                            //密码
 	        // userage: 37,                                //年龄
-	        logindate : new Date()                      //最近登录时间
+	        logindate : new Date(),
+	        openid:data.openid                      //最近登录时间
 	    });
 		let saveStatus=user.save(function (err, res) {
 		    	console.log("userSave")

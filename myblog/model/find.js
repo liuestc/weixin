@@ -1,9 +1,9 @@
 var User = require("../mongo/user.js");
 
-function findName(name){
+function findName(openid){
 
 	return new Promise((resolve,reject)=>{
-		var wherestr = {'username' : name};
+		var wherestr = {'username' : openid};
 	    User.find(wherestr, function(err, res){
 	        if (err) {
 	            console.log("Error:" + err);
