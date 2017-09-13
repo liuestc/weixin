@@ -39,3 +39,6 @@ routes(app);
 app.listen(config.port, function () {
   console.log(`${pkg.name} listening on port ${config.port}`);
 });
+
+
+// routes(app)

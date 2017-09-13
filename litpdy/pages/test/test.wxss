@@ -1,0 +1,6 @@
+/* test.wxss */
+.wrapper-test{
+  font-size:20px;
+  color:red;
+
+}

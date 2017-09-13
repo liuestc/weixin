@@ -8,18 +8,30 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var session = require('express-session')
 
+
+const request = require("request")
+
 //  将session存文件
 var FileStore = require('session-file-store')(session);
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 
 
-var saveData=require('./mongo/connect.js')
+// var saveData=require('./mongo/user.js')
+
 
 
 var userLogin = require('./user').items;
 
+/*微信部分*/
+
+var insert=require('./model/insert.js')
+var findName=require("./model/find.js")
+
+
+
+/*微信部分结束*/
 
 var app = express();
 
@@ -61,7 +73,7 @@ app.use(session({
 
 }))
 
-app.use('/save',saveData)
+// app.use('/save',saveData)
 
 app.use('/cookie',function(req,res){
 	if(req.cookies.isVisited){
@@ -89,7 +101,7 @@ app.use('/session',function(req,res){
 })
 
 
-
+/*测试session开始*/
 
 app.post('/login', function(req, res, next){
     
@@ -150,6 +162,133 @@ app.get('/login', function(req, res, next){
         name: loginUser || ''
     });
 });
+
+
+/*测试session结束*/
+
+// 获取用户opeenid
+// 插入到数据录里面
+//  注册的时候再对应起来
+
+
+app.get('/onLogin',function(req,res,next){
+  console.log("onLogin 接口访问成功")
+  // console.log("req code",req)
+  let JSCODE=req.query.code
+  let appid='wxbc2c393716c2732b'
+  let secret='afbf41eff4904c53875e351eb33f067c'
+  let wechatUrl="https://api.weixin.qq.com/sns/jscode2session?appid="+appid+"&secret="+secret+"&js_code="+JSCODE+"&grant_type=authorization_code"
+  let grant_type='authorization_code'
+  console.log(JSCODE)
+  request(wechatUrl,(err,response,body)=>{
+    // console.log(response)
+    let data=JSON.parse(body)
+    console.log(data)
+    res.set({
+      "Access-Control-Allow-Origin": "*"
+      ,"Access-Control-Allow-Methods": "POST,GET"
+      ,"Access-Control-Allow-Credentials": "true"
+    });
+    res.json(data)
+  })
+})
+
+
+
+app.get('/test',function(req,res,next){
+  res.json({
+    msg:"1"
+  })
+})
+
+
+
+/*微信小程序测试逻辑*/
+
+/*登录逻辑
+1. 数据库查重
+2. 如果没有重复则插入，有重复返回已经注册
+
+自动登录 
+用户进入页面判断openid是否在数据库中，
+如果在跳转信息展示页，如果不在跳转注册页
+
+*/
+
+app.get("/wechat/login",function(req,res,next){
+  console.log(123)
+  let user=req.query
+  console.log("带过来的参数",user)
+  // console.log(insert.toString())
+  if(user){
+    res.set({
+      "Access-Control-Allow-Origin": "*"
+      ,"Access-Control-Allow-Methods": "POST,GET"
+      ,"Access-Control-Allow-Credentials": "true"
+    });
+
+    findName(req.query.userName).then((response)=>{
+      console.log("find结果",response.length)
+      if(!response.length){
+        //可以插入
+        insert({
+            username:user.userName,
+            psw:user.psw,
+            openid:user.openid
+         }).then((response)=>{
+            console.log("promise对象",response)
+            res.json({
+              msg:"register success",
+              status:1
+            })
+
+        })
+      }
+      else{
+        res.json({
+          msg:"该用户已被注册",
+          status:0
+        })
+      }
+    })
+
+
+    // let findResult=find(user.username)
+    // console.log("上面是find结果",findResult)
+
+   // let insertResult=insert({
+   //        username:user.userName,
+   //        psw:user.psw
+   //  },(err,data)=>{
+   //    if(err){
+   //      console.log(err)
+   //    }
+   //    else{
+   //      console.log("我是data",data)
+   //    res.json({
+   //      status:data
+   //    })
+
+   //    }
+   //  })
+
+   /*分割线*/
+
+   // insert({
+   //    username:user.userName,
+   //    psw:user.psw
+   // }).then((response)=>{
+   //    console.log("promise对象",response)
+   //    res.json(response)
+   // })
+
+  }
+})
+
+
+/*小程序测试逻辑end*/
+
+
 
 
 // catch 404 and forward to error handler

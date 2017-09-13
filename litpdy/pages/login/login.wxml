@@ -1,0 +1,18 @@
+<!--index.wxml-->
+<view class="container ">
+  <view   class="username">
+  <input placeholder="用户名" bindinput='userVal' />
+  <view class="line"></view>
+  </view>
+  <view class="psw">
+  <input placeholder="密码" bindinput='pswVal' />
+  <view class="line"></view>
+  </view>
+<view class="">
+  <button type="primary" type='mini' bindtap="login" class='login-btn' bindtap='loginTest'> 注册 </button>
+</view>
+
+  <view class="{{alert}}">
+    {{msg}}
+  </view>
+</view>
