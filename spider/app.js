@@ -25,21 +25,29 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', function(req,res,next){
-	res.send("test")
+	// res.send("test")
 	request('https://cd.lianjia.com/chengjiao/',function(err,response,body){
 			// console.log(body)
 			var $ = cheerio.load(body);
-			var item=[]
-			let jspn=$(".listContent>li").each(function(item,index){
-				let title=$(item).find(".info").find(".title").text()
-				console.log(title)
-				let totalPrice=$(item).find(".info").find(".number")[0].text()
-				item.push({
-					title:title,
-					totalPrice:totalPrice
+			var arr=[]
+			// console.log($(".listContent>li"))
+			$(".listContent>li").each(function(i,item){
+				let title=$(item).find(".title").text()
+				let price=$(item).find(".totalPrice").find(".number").text()
+				let unitPrice=$(item).find(".unitPrice").find(".number").text()
+				let dealCycleTxt=$(item).find(".dealCycleTxt").find("span").eq(1).text()
+
+				// console.log(dealCycleTxt)
+
+				arr.push({
+					title,
+					price,
+					unitPrice,
+					dealCycleTxt
 				})
-			})
-			res.send(jspn)
+
+		})
+			res.send(arr)
 	})
 });
 app.use('/users', users);
