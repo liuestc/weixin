@@ -6,11 +6,21 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 var bodyParser = require('body-parser');
-var session = require('express-session')
 
 
 const request = require("request")
 
+
+// redis  缓存
+
+var jwt=require("jsonwebtoken")
+
+var sessions=require("express-sessions")
+var redis = require('redis');
+var RedisStore = require('connect-redis')(session);
+var client = redis.createClient();
+
+// RedisSessions = require("redis-sessions");
 //  将session存文件
 var FileStore = require('session-file-store')(session);
 
@@ -20,15 +30,28 @@ var index = require('./routes/index');
 
 // var saveData=require('./mongo/user.js')
 
+// jwt  *************************
+
+// var secretOrPrivateKey = "hello  BigManing"  //加密token 校验token时要使用
+// app.use(expressJWT({
+//     secret: secretOrPrivateKey   
+// }).unless({
+//     path: ['/getToken']  //除了这个地址，其他的URL都需要验证
+// }));
+
 
 
 var userLogin = require('./user').items;
+
+var WXBizDataCrypt = require('./screct/WXBizDataCrypt.js')
 
 /*微信部分*/
 
 var insert=require('./model/insert.js')
 var findName=require("./model/find.js")
 
+const appid='wxbc2c393716c2732b'
+const secret='afbf41eff4904c53875e351eb33f067c'
 
 
 /*微信部分结束*/
@@ -41,7 +64,9 @@ app.set('views', __dirname + '/views');
 
 app.set('view engine', 'jade');
 
-
+// rs = new RedisSessions();
+ 
+// rsapp = "myapp";
 
 
 //  方法
@@ -63,9 +88,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
+var testSeesion=app.use(session({
 	name: "ljd",
-	store: new FileStore(),
+  store: new RedisStore({
+    client:client
+  }),
 	secret:'I am a secret oooooo',  //用来签名
 	saveUninitialized: false,  // 是否自动保存未初始化的会话，建议false
 	resave: false,  // 是否每次都重新保存会话，建议false
@@ -73,7 +100,25 @@ app.use(session({
 
 }))
 
+// console.log("testSession",testSeesion)
 // app.use('/save',saveData)
+
+
+// token
+
+app.get('/getToken', function (req, res) {
+    res.json({
+        result: 'ok',
+        token: jwt.sign({
+            name: "BinMaing",
+            data: "============="
+        }, "secrect", {
+                expiresIn: 60 * 1
+            })
+    })
+});
+
+
 
 app.use('/cookie',function(req,res){
 	if(req.cookies.isVisited){
@@ -94,6 +139,7 @@ app.use('/session',function(req,res){
 	if(req.session.isVisit) {
     req.session.isVisit++;
     res.send('<p>第 ' + req.session.isVisit + '次来到此页面</p>');
+    console.log("req.session",req.session)
   } else {
     req.session.isVisit = 1;
     res.send('欢迎第一次来这里');
@@ -170,16 +216,28 @@ app.get('/login', function(req, res, next){
 // 插入到数据录里面
 //  注册的时候再对应起来
 
+    // client.on("ready",function(){
+    //   console.log("client  连接成功")
+    // })
+
+    // client.on("connect",function(){
+    //   console.log("connect success")
+    //   client.set("token","test",redis.print)
+    // })
+
+
+
+
 
 app.get('/onLogin',function(req,res,next){
   console.log("onLogin 接口访问成功")
   // console.log("req code",req)
   let JSCODE=req.query.code
-  let appid='wxbc2c393716c2732b'
-  let secret='afbf41eff4904c53875e351eb33f067c'
+  let hasToken=req.query.token
+
   let wechatUrl="https://api.weixin.qq.com/sns/jscode2session?appid="+appid+"&secret="+secret+"&js_code="+JSCODE+"&grant_type=authorization_code"
   let grant_type='authorization_code'
-  console.log(JSCODE)
+  // console.log(JSCODE)
   request(wechatUrl,(err,response,body)=>{
     // console.log(response)
     let data=JSON.parse(body)
@@ -189,15 +247,136 @@ app.get('/onLogin',function(req,res,next){
       ,"Access-Control-Allow-Methods": "POST,GET"
       ,"Access-Control-Allow-Credentials": "true"
     });
-    res.json(data)
+    // res.json(data)
+    // 存进redis  openid session_key
+
+    // 如果没有带token参数，生成token
+    //
+    console.log("hasToken",hasToken)
+    if(hasToken){
+      console.log("hasToken",hasToken)
+      jwt.verify(hasToken, 'secrect', function(err, decoded) {
+        console.log("decoded",decoded) // bar
+        if(err){
+          //  过期
+          console.log("token过期")
+          let token=jwt.sign({
+              name: data.openid,
+              data: data
+          }, "secrect", {
+                expiresIn: 60 * 1000 *2
+          })
+
+
+// 重新再redis中设置
+          client.set(data.openid,token,function(err,replies){
+            if(err){
+                throw(err)
+              }
+              else{
+                console.log("replies",replies)
+
+                res.json({
+                  token:token,
+                  new:0
+                })
+              }
+            })
+        }
+        else{
+          console.log("查找成功")
+          res.json({
+            success:1
+          })
+        }
+        //  验证登录状态
+        // let id=decoded.openid
+        // client.on("connect",function(){
+        //   client.get("id",function(err,value){
+        //     //  token过期或者其他问题
+        //     if(err){
+        //       // throw(err)
+        //       let token=jwt.sign({
+        //         name:data.openid,
+        //         data:data
+        //       })
+        //       client.set("openid")
+
+        //     }
+        //     else{
+        //       console.log("已经登录")
+        //     }
+        //   })
+        // })
+      });
+
+    }
+    //token为空第一次登录，将token存入
+    else{
+      console.log("未携带token")
+      let token=jwt.sign({
+            name: data.openid,
+            data: data
+        }, "secrect", {
+              expiresIn: 60 * 1000 *2
+        })
+
+      // 未执行
+
+      client.set(data.openid,token,function(err,replies){
+          if(err){
+            throw(err)
+          }
+          else{
+            console.log("replies",replies)
+
+            res.json({
+              token:token
+            })
+          }
+      })
+      // client.on("connect",function(){
+      //   console.log("connect success")
+      //   client.set("test",token,redis.print)
+      //   res.json({
+      //     token:token
+      //   })
+      // })
+    }
+    // res.json({
+    //     result: 'ok',
+    //     token: token
+    // })
   })
 })
 
 
+app.get("/decryptData",function(req,res,next){
+  let appId='wxbc2c393716c2732b'
+  let session=req.query.session
+  let encryptedData=req.query.encryptedData
+  let iv=req.query.iv
 
+  // console.log("是否传值",session)
+
+  var pc = new WXBizDataCrypt(appId, session)
+
+  var data = pc.decryptData(encryptedData , iv)
+  // console.log(data)
+  res.json(data)
+
+})
+
+
+// client.on("ready",function(){
+//   console.log("client ready success")
+// })
+//  为啥子这里打印不成功
 app.get('/test',function(req,res,next){
-  res.json({
-    msg:"1"
+  // console.log(client)
+  client.on("connect",function(){
+    console.log("ready成功")
+    client.set("test2","test",redis.print)
   })
 })
 
