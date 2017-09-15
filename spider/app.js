@@ -36,12 +36,14 @@ app.use('/', function(req,res,next){
 				let price=$(item).find(".totalPrice").find(".number").text()
 				let unitPrice=$(item).find(".unitPrice").find(".number").text()
 				let dealCycleTxt=$(item).find(".dealCycleTxt").find("span").eq(1).text()
+				let dealDate=$(item).find(".dealDate").text()
 
 				// console.log(dealCycleTxt)
 
 				arr.push({
 					title,
 					price,
+					dealDate,
 					unitPrice,
 					dealCycleTxt
 				})

@@ -1,0 +1,33 @@
+/* pages/animation/animate.wxss */
+.cycle{
+  width:500rpx;
+  height:500rpx;
+  background: #33B95D ;
+  border-radius:50%;
+  /* text-align: center; */
+  margin:50rpx auto;
+  box-shadow: 0 0 0 0rpx rgba(51,185,93,1);
+  /* box-shadow:-5px -5px 0px #fff inset;   */
+  animation: pulse 2.5s ease-out infinite;
+  border:2px solid #fff;
+}
+
+
+ @keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0prx rgba(51,185,93, 1);
+  }
+  25% {
+      -webkit-box-shadow: 0 0 0 20rpx rgba(51,185,93, .75);
+  }
+
+  50% {
+      -webkit-box-shadow: 0 0 0 30rpx rgba(51,185,93, .5);
+  }
+  75%{
+     -webkit-box-shadow: 0 0 0 40rpx rgba(51,185,93, .25);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 10rpx rgba(51,185,93, .1);
+  }
+} 

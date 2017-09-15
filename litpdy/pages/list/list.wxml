@@ -1,0 +1,105 @@
+
+<view class='list-wrapper'>
+  <swiper indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" class='swiper-img' />
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class='my-data'>
+    <!-- <view class='num'>1</view> -->
+    <image src='../../resource/img/step_full.png'></image>
+    <view class='info-wrapper'>
+      <view class='name'>王大锤</view>
+      <view class='rank'>第100名</view>
+      <view class='visibility'></view>
+    </view>
+    <view class='step'>6666</view>
+  </view>
+
+  <view class='list-data'>
+
+    <view class='my-data'>
+    <view class='num'>1</view>
+    <image src='../../resource/img/step_full.png'></image>
+    <view class='info-wrapper'>
+      <view class='name'>王大锤</view>
+      <!-- <view class='rank'>第100名</view> -->
+      <view class='visibility'></view>
+    </view>
+    <view class='step'>6666</view>
+  </view>
+
+
+    <view class='my-data'>
+    <view class='num'>1</view>
+    <image src='../../resource/img/step_full.png'></image>
+    <view class='info-wrapper'>
+      <view class='name'>王大锤</view>
+      <view class='rank'>第100名</view>
+      <view class='visibility'></view>
+    </view>
+    <view class='step'>6666</view>
+  </view>
+
+    <view class='my-data'>
+    <view class='num'>1</view>
+    <image src='../../resource/img/step_full.png'></image>
+    <view class='info-wrapper'>
+      <view class='name'>王大锤</view>
+      <view class='rank'>第100名</view>
+      <view class='visibility'></view>
+    </view>
+    <view class='step'>6666</view>
+  </view>
+
+    <view class='my-data'>
+    <view class='num'>1</view>
+    <image src='../../resource/img/step_full.png'></image>
+    <view class='info-wrapper'>
+      <view class='name'>王大锤</view>
+      <view class='rank'>第100名</view>
+      <view class='visibility'></view>
+    </view>
+    <view class='step'>6666</view>
+  </view>
+
+    <view class='my-data'>
+    <view class='num'>1</view>
+    <image src='../../resource/img/step_full.png'></image>
+    <view class='info-wrapper'>
+      <view class='name'>王大锤</view>
+      <view class='rank'>第100名</view>
+      <view class='visibility'></view>
+    </view>
+    <view class='step'>6666</view>
+  </view>
+
+    <view class='my-data'>
+    <view class='num'>1</view>
+    <image src='../../resource/img/step_full.png'></image>
+    <view class='info-wrapper'>
+      <view class='name'>王大锤</view>
+      <view class='rank'>第100名</view>
+      <view class='visibility'></view>
+    </view>
+    <view class='step'>6666</view>
+  </view>
+
+  </view>
+
+
+  <view class='footer'>
+    <view class='tab' bindtap='goRun'>
+      <image src='../../resource/img/step.png'></image>
+      <view>今日步数</view>
+    </view>
+    <view class='tab'>
+      <image src='../../resource/img/list_full.png'></image>
+      <view>排行榜</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,34 @@
+<view class='run-container'>
+  <view class='img-wrapper cycle'>
+    <!-- <image src='../../resource/img/circle.png'></image> -->
+    <view class='word-wrapper'>
+        <view>今日步数</view>
+        <view class='run-count'>5200</view>
+        <view>步</view>
+    </view>
+
+  </view>
+  <view class='refresh'>刷新步数</view>
+  <view class='run-data'>
+    <image src='../../resource/img/wave.png' class='img-wave'></image>
+    <view class='content-wrapper'>
+      <view>123456</view>
+      <view>本月累计步数</view>
+    </view>
+    <view class='content-wrapper'>
+      <view>12</view>
+      <view>本月达标天数</view>
+    </view>
+  
+  </view>
+  <view class='footer'>
+    <view class='tab'>
+      <image src='../../resource/img/step_full.png'></image>
+      <view>今日步数</view>
+    </view>
+    <view class='tab' bindtap='goList'>
+      <image src='../../resource/img/list.png'></image>
+      <view>排行榜</view>
+    </view>
+  </view>
+</view>

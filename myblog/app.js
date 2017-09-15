@@ -30,6 +30,8 @@ var index = require('./routes/index');
 
 // var saveData=require('./mongo/user.js')
 
+// var saveSport=require("./mongo/sport.js")
+
 // jwt  *************************
 
 // var secretOrPrivateKey = "hello  BigManing"  //加密token 校验token时要使用
@@ -48,6 +50,7 @@ var WXBizDataCrypt = require('./screct/WXBizDataCrypt.js')
 /*微信部分*/
 
 var insert=require('./model/insert.js')
+var insertSport=require('./model/insertSport.js')
 var findName=require("./model/find.js")
 
 const appid='wxbc2c393716c2732b'
@@ -252,7 +255,7 @@ app.get('/onLogin',function(req,res,next){
 
     // 如果没有带token参数，生成token
     //
-    console.log("hasToken",hasToken)
+    // console.log("hasToken",hasToken)
     if(hasToken){
       console.log("hasToken",hasToken)
       jwt.verify(hasToken, 'secrect', function(err, decoded) {
@@ -278,7 +281,7 @@ app.get('/onLogin',function(req,res,next){
 
                 res.json({
                   token:token,
-                  new:0
+                  session:data.session_key
                 })
               }
             })
@@ -286,7 +289,9 @@ app.get('/onLogin',function(req,res,next){
         else{
           console.log("查找成功")
           res.json({
-            success:1
+            token:hasToken,
+            session:data.session_key
+
           })
         }
         //  验证登录状态
@@ -331,7 +336,8 @@ app.get('/onLogin',function(req,res,next){
             console.log("replies",replies)
 
             res.json({
-              token:token
+              token:token,
+              session:data.session_key
             })
           }
       })
@@ -356,14 +362,25 @@ app.get("/decryptData",function(req,res,next){
   let session=req.query.session
   let encryptedData=req.query.encryptedData
   let iv=req.query.iv
+  let openid=req.query.openid
 
   // console.log("是否传值",session)
 
   var pc = new WXBizDataCrypt(appId, session)
 
-  var data = pc.decryptData(encryptedData , iv)
-  // console.log(data)
-  res.json(data)
+  var stopData = pc.decryptData(encryptedData , iv)
+  // console.log("sport",stopData.stepInfoList)
+  var sport=stopData.stepInfoList
+  // // console.log(data)
+  // 存数据
+  insertSport({
+    openid:openid,
+    sport:sport
+  }).then((response)=>{
+    console.log("运动数据插入成功")
+    res.json(sport)
+
+  })
 
 })
 

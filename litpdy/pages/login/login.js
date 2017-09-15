@@ -78,41 +78,76 @@ Page({
       pswVal: e.detail.value
     })
   },
+  getOpenId:function(){
+    return new Promise((resolve)=>{
+      wx.getStorage({
+        key: 'openid',
+        success: function(res) {
+          console.log("发送给后台的openid",res.data)
+          resolve(res.data)
+        },
+      })
+    })
+  },
   loginTest:function(){
     // alert(1111)
     // console.log(222)
-    let userName=this.data.userVal
-    let psw=this.data.pswVal
-    console.log(app.globalData.url)
-    wx.request({
-      url:"http://127.0.0.1:8080/wechat/login",
-      data:{
-        userName,
-        psw
-      },
-      success:function(res){
-        console.log(res.data.status)
-        if(!res.data.status){
-          console.log("该用户名已经被注册");
-          // this.msg = res.data.msg
-          this.setData({
-            msg:res.data.msg,
-            alert:"alert"
-          })
-          setTimeout(function(){
-            this.setData({
-              msg: "",
-              alert: ""
-            })
-          }.bind(this),1000)
-          console.log(this.msg);
-        }
-      }.bind(this),
-      fail:function(err){
-        console.log("请求错误，网络原因")
-        console.log(err)
-      }
+   
+    console.log("promise对象",this.getOpenId())
 
+    wx.getStorage({
+      key: 'openid',
+      success:  (res)=> {
+        console.log("发送给后台的openid", res.data)
+        let openid=res.data
+        let userName = this.data.userVal
+        let psw = this.data.pswVal
+        wx.request({
+          url: "http://127.0.0.1:8080/wechat/login",
+          data: {
+            userName,
+            psw,
+            openid
+
+          },
+          success: function (res) {
+            console.log(res.data)
+            if (!res.data.status) {
+              console.log("该用户已经被注册");
+              // this.msg = res.data.msg
+              this.setData({
+                msg: res.data.msg,
+                alert: "alert"
+              })
+              setTimeout(function () {
+                this.setData({
+                  msg: "",
+                  alert: ""
+                })
+              }.bind(this), 1000)
+              console.log(this.msg);
+            }
+            else{
+              this.setData({
+                msg: res.data.msg,
+                alert: "alert"
+              })
+              wx.redirectTo({
+                url: "../blog/blog"
+              })
+              
+            }
+          }.bind(this),
+          fail: function (err) {
+            console.log("请求错误，网络原因")
+            console.log(err)
+          }
+
+        })
+
+      },
     })
+
+
   }
 })

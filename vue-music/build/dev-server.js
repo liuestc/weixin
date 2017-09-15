@@ -11,6 +11,7 @@ var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
+var axios=require("axios")
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -20,7 +21,48 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
+
+
 var app = express()
+
+var api=express.Router()
+
+
+api.get("/getSingerList",function(req,res){
+  let queryData={
+        channel:"singer",
+        page:"list",
+        key:"all_all_all",
+        pagesize:100,
+        pagenum:1,
+        g_tk:5381,
+        jsonpCallback:"GetSingerListCallback",
+        loginUin:0,
+        hostUin:0,
+        format:"json",
+        inCharset:"utf8",
+        outCharset:"utf-8",
+        notice:0,
+        platform:"yqq",
+        needNewCode:0
+      }
+
+  let url='https://c.y.qq.com/v8/fcg-bin/v8.fcg'
+  axios.get(url,{
+    headers:{
+      referer:"https://y.qq.com/portal/singer_list.html"
+    },
+    params:queryData
+  }).then((response)=>{
+      res.json(response.data)
+  }).catch((e)=>{
+    console.log(e)
+  })
+
+})
+
+app.use("/api",api)
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
