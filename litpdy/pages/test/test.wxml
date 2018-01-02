@@ -1,22 +1,12 @@
-<!--test.wxml-->
-<text>test.wxml</text>
-<view class="wrapper-test">
-我是test
-</view>
+<!-- <view class='body'>
+<canvas class='canvas'  width="200" height="200" canvas-id="myCanvas" style="border: 1px solid;"/>
 
-<view class="section">
-  <view class="section__title">flex-direction: row</view>
-  <view class="flex-wrp" style="flex-direction:row;">
-    <view class="flex-item bc_green">1</view>
-    <view class="flex-item bc_red">2</view>
-    <view class="flex-item bc_blue">3</view>
-  </view>
-</view>
-<view class="section">
-  <view class="section__title">flex-direction: column</view>
-  <view class="flex-wrp" style="height: 300px;flex-direction:column;">
-    <view class="flex-item bc_green">1</view>
-    <view class="flex-item bc_red">2</view>
-    <view class="flex-item bc_blue">3</view>
-  </view>
-</view>
+  <!-- <view class="wrapper">
+    <view class='wave wave1 '></view>
+    <view class='wave  wave2'></view>
+  </view> -->
+
+
+
+<!-- </view> -->
+ -->

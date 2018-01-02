@@ -1,6 +1,6 @@
 {
   "pages": [
-    
+ 
     "pages/run/run",
     "pages/login/login",
     "pages/index/index",
@@ -13,7 +13,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "今日步数",
     "navigationBarTextStyle": "black"
   }
 }

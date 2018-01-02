@@ -2,6 +2,9 @@ var Sport = require("../mongo/sport.js");
 
 /*promise版本*/
 function insertSport(data){
+
+	//如果有相同openid则更新
+	// 更新注意去重，如何去重
 	return new Promise((resolve,reject)=>{
 		var sport = new Sport({
 	        sportData : data.sport,

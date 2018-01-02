@@ -26,7 +26,7 @@ swiper{
   /* padding:23rpx 28rpx 23rpx 75rpx; */
   vertical-align: middle;
   float: left;
-  padding-right:28rpx;
+
 }
 
 .info-wrapper{
@@ -34,6 +34,7 @@ swiper{
    vertical-align: middle; 
    /* line-height: 100rpx; */
    height: 100rpx;
+     padding-left:28rpx;
 }
 
 .name{
@@ -59,6 +60,8 @@ display:inline-block;
   vertical-align: middle;
   line-height: 100rpx;
   color:#33B95D ;
+  font-size:48rpx;
+  font-weight:800;
 
 }
 

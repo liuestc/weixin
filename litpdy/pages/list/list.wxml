@@ -11,83 +11,30 @@
 
   <view class='my-data'>
     <!-- <view class='num'>1</view> -->
-    <image src='../../resource/img/step_full.png'></image>
+    <image src='{{myRank.AVATAR}}'></image>
     <view class='info-wrapper'>
-      <view class='name'>王大锤</view>
-      <view class='rank'>第100名</view>
+      <view class='name'>{{myRank.NICKNAME}}</view>
+      <view class='rank'>第{{myRank.RANK}}名</view>
       <view class='visibility'></view>
     </view>
-    <view class='step'>6666</view>
+    <view class='step'>{{myRank.STEP_AMOUNT}}</view>
   </view>
 
-  <view class='list-data'>
+  <view class='list-data' >
 
-    <view class='my-data'>
-    <view class='num'>1</view>
-    <image src='../../resource/img/step_full.png'></image>
+  <view class='my-data' wx:for="{{list}}"  wx:for-index="idx" wx:for-item="item">
+    <view class='num'>{{idx+1}}</view>
+    <image src="{{ item.AVATAR==='null' ? '../../resource/img/step_full.png': item.AVATAR}}"></image>
     <view class='info-wrapper'>
-      <view class='name'>王大锤</view>
+      <view class='name'>{{item.NICKNAME}}</view>
       <!-- <view class='rank'>第100名</view> -->
       <view class='visibility'></view>
     </view>
-    <view class='step'>6666</view>
+    <view class='step'>{{item.STEP_AMOUNT}}</view>
   </view>
 
 
-    <view class='my-data'>
-    <view class='num'>1</view>
-    <image src='../../resource/img/step_full.png'></image>
-    <view class='info-wrapper'>
-      <view class='name'>王大锤</view>
-      <view class='rank'>第100名</view>
-      <view class='visibility'></view>
-    </view>
-    <view class='step'>6666</view>
-  </view>
 
-    <view class='my-data'>
-    <view class='num'>1</view>
-    <image src='../../resource/img/step_full.png'></image>
-    <view class='info-wrapper'>
-      <view class='name'>王大锤</view>
-      <view class='rank'>第100名</view>
-      <view class='visibility'></view>
-    </view>
-    <view class='step'>6666</view>
-  </view>
-
-    <view class='my-data'>
-    <view class='num'>1</view>
-    <image src='../../resource/img/step_full.png'></image>
-    <view class='info-wrapper'>
-      <view class='name'>王大锤</view>
-      <view class='rank'>第100名</view>
-      <view class='visibility'></view>
-    </view>
-    <view class='step'>6666</view>
-  </view>
-
-    <view class='my-data'>
-    <view class='num'>1</view>
-    <image src='../../resource/img/step_full.png'></image>
-    <view class='info-wrapper'>
-      <view class='name'>王大锤</view>
-      <view class='rank'>第100名</view>
-      <view class='visibility'></view>
-    </view>
-    <view class='step'>6666</view>
-  </view>
-
-    <view class='my-data'>
-    <view class='num'>1</view>
-    <image src='../../resource/img/step_full.png'></image>
-    <view class='info-wrapper'>
-      <view class='name'>王大锤</view>
-      <view class='rank'>第100名</view>
-      <view class='visibility'></view>
-    </view>
-    <view class='step'>6666</view>
-  </view>
 
   </view>
 
@@ -95,11 +42,11 @@
   <view class='footer'>
     <view class='tab' bindtap='goRun'>
       <image src='../../resource/img/step.png'></image>
-      <view>今日步数</view>
+      <view style="color:#c1c1c1">今日步数</view>
     </view>
     <view class='tab'>
       <image src='../../resource/img/list_full.png'></image>
-      <view>排行榜</view>
+      <view style='color:{{activeColor}}'>排行榜</view>
     </view>
   </view>
 </view>

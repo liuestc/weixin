@@ -1,1 +1,17 @@
-{}
+{
+  "pages": [
+    "pages/run/run",
+    "pages/login/login",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/blog/blog",
+    "pages/list/list",
+    "pages/animation/animate"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "今日步数",
+    "navigationBarTextStyle": "black"
+  }
+}
