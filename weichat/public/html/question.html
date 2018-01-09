@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Document</title>
+	<style>
+		html{
+			background: url('../image/bg0.png');
+			color: #ffffff
+		}
+		*{
+			padding:0;
+			margin:0;
+			list-style: none;
+		}
+		.question-content{
+			display: inline-block;
+		}
+
+		ul{
+			margin:10px auto;
+			/*margin:20px;*/
+
+		}
+		li{
+			position: relative;
+			background: #161f2f;
+			/*margin:20px;*/
+			padding:15px 20px;
+			margin:6px 0 ;
+
+		}
+
+		ul li input[type=radio]{
+		    position: absolute;
+		    visibility: hidden;
+		}
+
+		ul li .check-style{
+		    display: inline-block;
+		    position: absolute;
+		    border: 2px solid #AAAAAA;
+		    border-radius: 100%;
+		    height: 15px;
+		    width: 15px;
+		    top: 30px;
+		    right: 20px;
+		    z-index: 5;
+		    transition: border .25s linear;
+			-webkit-transition: border .25s linear;
+		}
+
+		ul li .check-style::before {
+		    display: block;
+		    position: absolute;
+			content: '';
+		    border-radius: 100%;
+		    height: 8px;
+		    width: 8px;
+			top: 50%;
+		    left: 50%;
+		    transform: translate(-52%,-58%);
+		    margin: auto;
+			transition: background 0.25s linear;
+			-webkit-transition: background 0.25s linear;
+		}
+		input[type=radio]:checked ~ .check-style{
+			border:2px solid #0DFF92;
+		}
+		input[type=radio]:checked ~ .check-style::before{
+		    background: #0DFF92;
+		}
+
+		.star{
+			display: inline-block;
+			width:14px;
+			height: 14px;
+		}
+		.star img{
+			width:100%;
+			height: 100%;
+		}
+		.star-word{
+			font-size: 12px;
+		}
+		.star-content{
+			padding:4px 4px 4px 10px;
+
+		}
+		.question-btn{
+			width:82%;
+			margin:0 auto;
+			background: url('../image/button0.png');
+			background-size:100% 100%;
+			text-align: center;
+			color: #232c3d;
+			height:44px;
+			line-height: 44px;
+		}
+
+		.question-btn:hover{
+			background: url('../image/button0_hover.png');
+			background-size:100% 100%;			
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<ul>
+			<li>
+				<label for="question1">
+					<div class='question-content'><span>【强子】</span><span>把大象放冰箱分几步</span></div>
+					<input type="radio"  name='question' id='question1'>
+					<div class="check-style"></div>
+				</label>
+				<div class='star-content'>
+					<span class='star-word'>难度：</span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+			</li>
+
+			<li>
+				<label for="question2">
+					<div class='question-content'><span>【强子】</span><span>把大象放冰箱分几步</span></div>
+					<input type="radio"  name='question' id='question2'>
+					<div class="check-style"></div>
+				</label>
+				<div class='star-content'>
+					<span class='star-word'>难度：</span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+			</li>
+			<li>
+				<label for="question3">
+					<div class='question-content'><span>【强子】</span><span>把大象放冰箱分几步</span></div>
+					<input type="radio"  name='question' id='question3'>
+					<div class="check-style"></div>
+				</label>
+				<div class='star-content'>
+					<span class='star-word'>难度：</span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+					<span class='star'><img src="../image/icon/star_full.png" alt=""></span>
+				</div>
+			</li>
+		</ul>
+		<div class='question-btn'>
+			占领
+		</div>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script>
+$(function(){
+	$.ajax({
+		url:"../js/test.json",
+		success:function(res){
+			
+			let questionList=res.question
+			console.log(questionList)
+			questionList.forEach((item,index)=>{
+				let hard=item.hard
+				starStr1=""
+				for(let i=0;i<hard;i++){
+					starStr1+='<span class="star"><img src="../image/icon/star_full.png" alt=""></span>'
+				}
+				let starStr2=""
+				for(let j=0;j<(5-hard);j++){
+					starStr2+='<span class="star"><img src="../image/icon/star.png" alt=""></span>'
+				}
+
+				let starContent="<div class='star-content'><span class='star-word'>难度：</span>"+starStr1+starStr2+"</div>"
+				console.log("id",item.id)
+				let label="<label for='"+item.id+"'>"+
+							"<div class='question-content'><span>【强子】</span><span>"+item.topic+"</span></div>"+
+							"<input type='radio'  name='question' id='"+question3+"'>"+
+							"<div class='check-style'></div>"+
+						  "</label>"	
+				// 
+				// console.log("label",label)
+				let liContent="<li>"+label+starContent+"</li>"
+				console.log("liContent",liContent)
+				$("ul").append(liContent)
+			})
+		}
+	})
+})
+</script>
+</html>

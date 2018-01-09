@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Document</title>
+	<style>
+		html{
+			background: url('../image/bg0.png')
+		}
+		*{
+			padding:0;
+			margin:0;
+		}
+		.part1-img{
+			margin-top:-50px;
+		}
+		input,button,select,textarea{outline:none}
+		.agree-wrapper{
+			width:100%;
+			font-size: 0;
+		}
+		.agree-wrapper img{
+			width:100%;
+			/*height:100vh;*/
+			z-index:10;
+		}
+		.agree-btns{
+			display: flex;
+			width: 80%;
+			margin:0 auto;
+			margin-top:-120px;
+		}
+		.agree-btn1,.agree-btn2{
+			flex:1;
+			/*font-size: 0;*/
+			position: relative;
+			text-align: center;
+		}
+		.agree-btn1{
+			margin-right:10px;
+		}
+		.agree-btn2{
+			margin-left:10px;
+		}
+
+		.agree-btn1 img,.agree-btn2 img{
+			width:100%;
+		}
+		.agree-btn1 p,.agree-btn2 p{
+			position: absolute;
+			top:50%;
+			left:50%;
+			transform: translate(-50%,-50%);
+			color:#232C3D;
+			font-size: 14px;
+
+		}
+		.agree-btn2 p{
+			color:#4AEE60;
+		}
+		.part2{
+			position: relative;
+			height:100vh;
+			width:100%;
+			/*z-index:-1;*/
+			display: none;
+		}
+		.part2-circle{
+			width:128px;
+			height:128px;
+			margin:0 auto;
+			border-radius:50%;
+			background: #161F2F;
+			position: absolute;
+			text-align: center;
+			line-height: 128px;
+			top:40%;
+			left:50%;
+			transform: translateX(-50%);
+		}
+		.part2-circle{
+			color:#4AEE60;
+		}
+		.part3{
+			display: none;
+		}
+		.part3-content{
+		    background: #161F2F;
+		    width: 82%;
+		    margin: 0 auto;
+		    color: #fff;
+		    text-align: center;
+		    margin-top: 40%;
+		    padding: 20px 0;
+		}
+		.part3-title{
+			color: #4AEE60;
+			font-size: 16px;
+    		padding: 10px 0;
+		}
+		.part3-word{
+			font-size: 14px;
+			line-height: 1.5;
+		}
+		.part3-btn,.part4-btn{
+		    width: 82%;
+		    height: 44px;
+		    background: url(../image/button0.png);
+		    background-size: 100% 100%;
+		    margin: 0 auto;
+		    text-align: center;
+		    margin-top: 140px;
+		    line-height: 44px;
+		}
+		.part3-btn:hover,.part4-btn:hover{
+			background: url(../image/button0_hover.png);
+			background-size: 100% 100%;
+		}
+
+		.part4{
+			display: none;
+		}
+		.part4-circle{
+			width:125px;
+			height:125px;
+			border-radius:50%;
+			text-align: center;
+			color:#fff;
+			background: #161F2F;
+			margin:0 auto;
+			/*line-height: 25px;*/
+			margin-top:80px;
+			    /*border: none;*/
+		    padding-top: 34px;
+		    box-sizing: border-box;
+		}
+		.room-num{
+			color:#4AEE60;
+			font-size: 30px;
+		}
+
+		.part4-input{
+			background: url("../image/input.png");
+			width:82%;
+			margin:0 auto;
+			background-size:100% 100%;
+			height:44px;
+		}
+		.part4-input input{
+		    border: none;
+		    height: 100%;
+		    width: 100%;
+		    background: #161F2F;
+		    text-align: center;
+		    /* padding: 10px; */
+		    /* line-height: 30px; */
+		    background: url(../image/input.png);
+		    background-size: 100% 100%;
+		    color:#4AEE60;
+		}
+
+
+		::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+		  color: #4AEE60;
+		}
+		::-moz-placeholder { /* Firefox 19+ */
+		  color: #4AEE60;
+		}
+		:-ms-input-placeholder { /* IE 10+ */
+		  color: #4AEE60;
+		}
+		:-moz-placeholder { /* Firefox 18- */
+		  color: #4AEE60;
+		}
+
+		.part4-input{
+			margin-top:50px;
+
+		}
+		.part4 .part4-btn{
+			margin-top:16px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="agree-wrapper part1">
+		<img src="../image/bg2.png" alt="" class='part1-img'>
+		<div class="agree-btns">
+			<div class="agree-btn1">
+				<img src="../image/button1.png" alt="">
+				<p>同意！</p>
+			</div>
+			<div class="agree-btn2">
+				<img src="../image/button2.png" alt="">
+				<p>还是同意？</p>
+			</div>
+		</div>
+	</div>
+	<div class="part2">
+		<div class="part2-circle">3</div>
+	</div>
+
+	<div class="part3">
+		<div class="part3-content">
+			<p class="part3-title">胜利条件</p>
+			<p class="part3-word">1.不被手机炸死</p>
+			<p class="part3-word">2.xxxxx</p>
+			<p class="part3-title">游戏奖励</p>
+			<p class="part3-word">兑换乔·达·波思颁发的奖品</p>
+		</div>
+		<div class="part3-btn">确定</div>
+	</div>
+
+	<div class="part4">
+		<div class='part4-circle'>
+			<p>房间号</p>
+			<p class='room-num'>001</p>
+		</div>
+		<div class="part4-input"><input type="text" placeholder="请输入房间密码"></div>
+		<div class="part4-btn">确定</div>
+	</div>
+
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script>
+	$(function(){
+		$(".part2").hide()
+		$(".part3").hide()
+		$(".agree-btn1").click(function(){
+			$(".part1").hide()
+			$(".part2").show()
+			setTimeout(function(){
+				$(".part2-circle").text("2")
+			},1000)
+			setTimeout(function(){
+				$(".part2-circle").text("1")
+			},2000)
+			setTimeout(function(){
+				$(".part2-circle").text("启动")
+			},3000)
+			// setTimeout(function(){
+			// 	$(".part2-circle").text("启动")
+			// },34000)
+
+		})
+		$('.part2-circle').click(function(){
+			console.log(1)
+			$(".part2").hide()
+			$(".part3").show()
+		})
+
+		$(".part3-btn").click(function(){
+			$(".part3").hide()
+			$(".part4").show()
+		})
+
+	})
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

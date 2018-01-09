@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Document</title>
+	<style>
+		.circle {
+		    width: 100%;
+		    margin: 6px 6px 20px;
+		    display: inline-block;
+		    position: relative;
+		    text-align: center;
+		    line-height: 1.2;
+		}
+
+		.circle canvas {
+		    vertical-align: top;
+		}
+
+		.circle span{
+			font-size: 12px;
+			top:40%;
+		}
+		.text-position{
+			position: absolute;
+		    font-size: 30px;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%,-50%);			
+		}
+		.text-gradient {  
+		    display: inline-block;
+		    color: green;
+		    /*font-size: 10em;*/
+		    font-family: '微软雅黑';
+		    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(0, 128, 0, 1)), to(rgba(51, 51, 51, 1)));
+		    -webkit-background-clip: text;
+		    -webkit-text-fill-color: transparent;
+		}; 
+	</style>
+</head>
+<body>
+	<div class="loading-circle">
+		<div class="circles">
+			<div class="circle">
+				<span class='text-position'>Loading</span>
+				<strong class='text-position text-gradient'></strong>
+			</div>
+		</div>
+	</div>	
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script src='../js/circle-progress.js'></script>
+<script>
+
+$('.circle').circleProgress({
+    value: 1,
+    fill: { gradient: ['rgb(0,253,74)', 'rgb(0,233,206)'] },
+    thickness: 20,
+    size: 200.0,
+    animation: {
+	    duration: 3000,
+	    easing: 'circleProgressEasing'
+	},
+	radius: 10,
+	startAngle: -Math.PI/2,
+	lineCap: 'round',
+}).on('circle-animation-progress', function(event, progress) {
+    $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
+});
+
+</script>
+</html>

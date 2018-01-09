@@ -71,7 +71,7 @@ app.use('/getUserInfo',function(req,res,next){
 })
 
 app.use("/getTicket",function(req,res,next){
-    console.log("query参数",req.query.url)   
+    console.log("query参数",req.query)   
 /*分割线拿到token*/
 
     let tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
@@ -86,18 +86,18 @@ app.use("/getTicket",function(req,res,next){
     if((nowTime-token.expires_in)<7200){
         console.log("我没有过期");
         console.log(token)
-            let jsapiUrl='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+token.token+'&type=jsapi'
-            request(jsapiUrl,(err,response,body)=>{
-                let jsapiResult = JSON.parse(body);
-                console.log(jsapiResult.ticket)
-                var test=signTicket(jsapiResult.ticket, req.query.url);
-                res.set({
-                    "Access-Control-Allow-Origin": "*"
-                    ,"Access-Control-Allow-Methods": "POST,GET"
-                    ,"Access-Control-Allow-Credentials": "true"
-                });
-                res.json(test)
-            })
+        let jsapiUrl='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+token.token+'&type=jsapi'
+        request(jsapiUrl,(err,response,body)=>{
+            let jsapiResult = JSON.parse(body);
+            console.log(jsapiResult.ticket)
+            var test=signTicket(jsapiResult.ticket, req.query.url);
+            res.set({
+                "Access-Control-Allow-Origin": "*"
+                ,"Access-Control-Allow-Methods": "POST,GET"
+                ,"Access-Control-Allow-Credentials": "true"
+            });
+            res.json(test)
+        })
 
 
     }
@@ -192,6 +192,7 @@ app.use(utils.sign(config))
 /*-菜单--*/
 app.use("/", (req, res, next) => {
     //1 获取access_token
+    //console.log(6666)
 
     let appid = config.wechat.appID;
     let appsecret = config.wechat.appSecret;
@@ -199,12 +200,14 @@ app.use("/", (req, res, next) => {
     let tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
 
     request(tokenUrl, (err, response, body) => {
-
         //body是字符串
-        console.log("是不是每一步都压要进这个？")
         let json = JSON.parse(body);
 
-        let token = res['access_token'];
+        let token = json['access_token'];
+
+        // console.log("response",response)
+        console.log("---------------")
+        console.log("token",token)
 
         fs.writeFile("./token.json",token,function(err){
             if(err){
@@ -220,9 +223,9 @@ app.use("/", (req, res, next) => {
         let data = {
             "button": [
                 {
-                    "type": "click",
-                    "name": "今日歌曲",
-                    "key": "V1001_TODAY_MUSIC"
+                    "type": "view",
+                    "name": "测试地址",
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxdd6ff9b96e990546&redirect_uri=http://2c9f1690.ngrok.io/html/map.html&response_type=code&scope=snsapi_userinfo&state=STATE&uin=ODMzMzM3NjYx&key=83803884d822afc6142e1b81d77b740d2f60d7e08c66dc8907cd6fa07a728d357455670a6a5caf3f4d4784973cb75b20&pass_ticket=VLu4MUL2UIJprVnGZ6w2NTMECL9Ze4igmow8xh+jjAIYvr5xLBmNYnYXw48kmAro18EVOGvFuQJmo37AAXKEpg==&uin=ODMzMzM3NjYx&key=c9661be7985175ceb1712da712360003f742ae10e18452ad096aab9ca15a4cc4db26e20eff0c450cacffebe5c1671479&pass_ticket=VLu4MUL2UIJprVnGZ6w2NTMECL9Ze4igmow8xh+jjAIYvr5xLBmNYnYXw48kmAro18EVOGvFuQJmo37AAXKEpg=="
                 },
                 {
                     "type": "scancode_push",
@@ -261,10 +264,10 @@ app.use("/", (req, res, next) => {
             }
         }, (err, response, body) => {
             if(err){
-            	// console.log("我不会发送菜单")
+            	console.log("我不会发送菜单")
                 res.send(err)
             }else{
-            	// console.log("我是那个菜单",body)
+            	console.log("我是那个菜单",body)
                 res.send(body)
             }
         })

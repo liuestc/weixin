@@ -1,0 +1,35 @@
+body{
+	background: url('../image/bg0.png');
+	height:100vh;
+	position: relative;
+	background-position: 100% 100%;
+
+}
+
+.progress-center{
+	background: url('../image/input.png');
+	width:80%;
+	height:2.75rem;
+	margin:0 auto;
+	text-align: center;
+	top:40%;
+	background-size: 100% 100%;
+	transform: translateY(200%);
+	overflow: hidden;
+	/*pos*/
+
+}
+
+
+
+p.progress-content{
+	color:#fff;
+	padding-top:10px;
+}
+p.progress-title{
+	font-size: 14px;
+	color: #4AEE60;
+}
+.progress-word{
+	padding-top:0.6rem;
+}

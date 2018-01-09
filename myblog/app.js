@@ -6,11 +6,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 var bodyParser = require('body-parser');
-
-
 const request = require("request")
-
-
 // redis  缓存
 
 var jwt=require("jsonwebtoken")
@@ -25,23 +21,6 @@ var client = redis.createClient();
 var FileStore = require('session-file-store')(session);
 
 var index = require('./routes/index');
-// var users = require('./routes/users');
-
-
-// var saveData=require('./mongo/user.js')
-
-// var saveSport=require("./mongo/sport.js")
-
-// jwt  *************************
-
-// var secretOrPrivateKey = "hello  BigManing"  //加密token 校验token时要使用
-// app.use(expressJWT({
-//     secret: secretOrPrivateKey   
-// }).unless({
-//     path: ['/getToken']  //除了这个地址，其他的URL都需要验证
-// }));
-
-
 
 var userLogin = require('./user').items;
 
@@ -49,27 +28,21 @@ var WXBizDataCrypt = require('./screct/WXBizDataCrypt.js')
 
 /*微信部分*/
 
-var insert=require('./model/insert.js')
-var insertSport=require('./model/insertSport.js')
-var findName=require("./model/find.js")
+// var insert=require('./model/insert.js')
+// var insertSport=require('./model/insertSport.js')
+// var findName=require("./model/find.js")
 
-const appid='wxbc2c393716c2732b'
-const secret='afbf41eff4904c53875e351eb33f067c'
+const appid='wxdd6ff9b96e990546'
+const secret='a0f7d90a8202cf555fb16f3f570a1dcd'
 
 
 /*微信部分结束*/
 
 var app = express();
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
 app.set('views', __dirname + '/views');
 
 app.set('view engine', 'jade');
-
-// rs = new RedisSessions();
- 
-// rsapp = "myapp";
 
 
 //  方法
@@ -102,10 +75,6 @@ var testSeesion=app.use(session({
 	cookie: { maxAge: 60 * 1000 }
 
 }))
-
-// console.log("testSession",testSeesion)
-// app.use('/save',saveData)
-
 
 // token
 
@@ -227,9 +196,6 @@ app.get('/login', function(req, res, next){
     //   console.log("connect success")
     //   client.set("token","test",redis.print)
     // })
-
-
-
 
 
 app.get('/onLogin',function(req,res,next){
@@ -391,10 +357,11 @@ app.get("/decryptData",function(req,res,next){
 //  为啥子这里打印不成功
 app.get('/test',function(req,res,next){
   // console.log(client)
-  client.on("connect",function(){
-    console.log("ready成功")
-    client.set("test2","test",redis.print)
-  })
+  res.send("hello")
+  // client.on("connect",function(){
+  //   console.log("ready成功")
+  //   client.set("test2","test",redis.print)
+  // })
 })
 
 

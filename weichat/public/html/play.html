@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Document</title>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=5sl5uHGbGjaA7vaqX6bATbyykEgbweiz"></script>
+	<style>
+		*,html{
+			padding:0;
+			margin:0;
+			list-style: none;
+		}
+		.play-container{
+			position: relative;
+			max-height: 100vh;
+			overflow: hidden;
+		}
+		.person-info{
+			height:75px;
+			width:100%;
+			box-shadow: 0px 3px 22px 0px rgba(0, 0, 0, 0.4);
+			background: rgb(34, 43, 60);
+			position: absolute;
+			top:0;
+			z-index:99;
+		}
+		.avatar{
+			width:45px;
+			height:45px;
+			line-height: 75px;
+			background: url("../image/icon/head.png");
+			background-size: 100% 100%;
+			display: inline-block;
+			margin-top:15px;
+			margin-left:20px;
+		}
+		.person-blood{
+			display: inline-block;
+			color: #c4cdde;
+			margin-left:20px;
+			vertical-align: super;
+			font-size: 14px;
+			font-weight:300;
+		}
+		.person-blood p{
+			padding:2px;
+		}
+		.blood1{
+			width:15px;
+			height:15px;
+			display: inline-block;
+			margin-left:15px;
+			font-size: 0;
+    		vertical-align: sub;
+		}
+		.blood1 img{
+			width:100%;
+			height:100%;
+		}
+
+		#map-container{
+			width:100%;
+			height:100vh;
+		}
+		.camera{
+			width:55px;
+			height:55px;
+			background: url('../image/icon/camera.png');
+			background-size:100% 100%;
+			position: absolute;
+			right:10px;
+			bottom:154px;
+		}
+		.notify{
+			height:123px;
+			width:100%;
+			position: absolute;
+			bottom:0;
+			transition: all ease 1s;
+
+		}
+		.notify-title{
+			height:25px;
+			width:100%;
+			background-color: rgba(34, 43, 60, 0.62);
+			box-sizing:border-box;
+			border-left:5px solid #4aee60;
+			color: #4aee60;
+			padding-left:14px;
+			font-size: 14px;
+			line-height: 25px;
+		}
+		.notify-content{
+			background-color: rgba(34, 43, 60, 0.2);
+			height:96px;
+			width:100%;
+			overflow: scroll;
+			transition: all ease 2s;
+		}
+		.notify-content p{
+			padding:4px 8px;
+			color: #fff;
+			font-size:12px;
+		}
+		.notify-time{
+			color: #4aee60;
+			display: inline-block;
+			padding-right:10px;
+		}
+		.drop-icon{
+			display: inline-block;
+			width:14px;
+			height: 14px;
+			background: url('../image/icon/combined_shape.png');
+			background-size:100% 100%;
+			float: right;
+    		margin-right: 14px;
+		}
+		.drop-down{
+			/*height:0;*/
+			transform: translateY(96px);
+		}
+		.drop-up{
+			/*height:0;*/
+			transform: translateY(0px);
+		}
+		.time-out{
+			display: inline-block;
+			font-size: 14px;
+			vertical-align: super;
+			padding-top:15px;
+			padding-right: 20px;
+			float: right;
+		}
+		.time-out-word{
+			color: #c4cdde;
+			font-weight: 300;
+		}
+		.time-out-num{
+			color: #4aee60;
+			font-size: 18px;
+			text-align: right;
+		}
+	</style>
+</head>
+<body>
+	<div class="play-container">
+		<div class="person-info">
+			<div class="avatar">
+				
+			</div>
+			<div class="person-blood">
+				<p>中二病体 <span class="blood1"><img src="../image/icon/shield_charged.png" alt=""></span></p>
+				<p>电磁护盾 <span class="blood1"><img src="../image/icon/shield_charged.png" alt=""></span></p>
+			</div>
+			<div class="time-out">
+				<p class='time-out-word'>电磁包倒计时</p>
+				<p class="time-out-num">10:20</p>
+			</div>
+		</div>
+		<div id="map-container"></div> 
+		<div class="notify">
+			<div class="notify-title">官方通知 <span class='drop-icon'></span></div>
+			<div class="notify-content">
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+				<p><span class='notify-time'>[12:20]</span>这里是一段文字</p>
+
+			</div>
+		</div>
+		<div class="camera"></div>
+	</div>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script>
+	//104.063015,30.592738
+	var map = new BMap.Map("map-container"); 
+	var point = new BMap.Point(104.063015,30.592738); 
+	map.centerAndZoom(point, 18);
+
+	var pt = new BMap.Point(104.063015,30.592738);
+	var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20,20),{
+		imageSize:new BMap.Size(20,20)
+	});
+	var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+	map.addOverlay(marker2);  
+
+
+	var pt1 = new BMap.Point(104.063125,30.591768);
+	var myIcon1 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
+		imageSize:new BMap.Size(20,20)
+	});
+	var marker3 = new BMap.Marker(pt1,{icon:myIcon1});  // 创建标注
+	map.addOverlay(marker3);  
+
+	var pt2 = new BMap.Point(104.063825,30.593768);
+	var myIcon2 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
+		imageSize:new BMap.Size(20,20)
+	});
+	var marker4 = new BMap.Marker(pt2,{icon:myIcon2});  // 创建标注
+	map.addOverlay(marker4); 
+
+
+</script>
+
+<script>
+	$(function(){
+		let status=true
+		$(".drop-icon").click(function(){
+			console.log($(this).parent().next())
+			console.log("status",status)
+			if(status){
+				$(this).parent().parent().removeClass("drop-up")
+				$(this).parent().parent().addClass("drop-down")
+				status=false
+			}
+			else{
+				$(this).parent().parent().removeClass("drop-down")
+				$(this).parent().parent().addClass("drop-up")
+				status=true				
+			}
+			
+
+		})
+	})
+</script>
+</html>
