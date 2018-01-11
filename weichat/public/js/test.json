@@ -18,5 +18,26 @@
 			"topic":"这是一个问题3",
 			"solution":["答案1-1","答案二-2","答案三-2"]
 		}
+	],
+	"points":[
+		{
+			"id":1,
+			"langitude":104.061125,
+			"latitude":30.598768,
+			"status":0
+		},
+		{
+			"id":2,
+			"langitude":104.063125,
+			"latitude":30.592768,
+			"status":0
+		},
+		{
+			"id":3,
+			"langitude":104.064125,
+			"latitude":30.591168,
+			"status":0
+		}
+
 	]
 }

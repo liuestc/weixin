@@ -1,24 +1,66 @@
+
+html{
+	/*background-image: url("../image/bg0.png");*/
+	/*background-size:100% 100%;*/
+}
 body{
-	background: url('../image/group.png');
+	background: url('../image/bg0.png');
 	height:100vh;
+	width:100%;
 	background-size: 100% 100%;
 }
 .word-wrapper{
-	background: url('../image/group_4.png');
+	/*background: url('../image/group_4.png');*/
 	width: 60%;
 	height: 32%;
 	margin:0 auto;
-	background-size:100% 100%;
-	margin-top: 6.3rem;
+	/*background-size:100% 100%;*/
+	padding-top: 6.3rem;
 	overflow: hidden;
 	text-align: center;
+	position: relative;
+}
+
+.word-wrapper img{
+	position: absolute;
+    width: 97%;
+    left: 50%;
+    transform: translateX(-50%);
+    top:25%;
 }
 
 .word-wrapper-p{
     overflow: scroll;
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
 	height:4.875rem;
+	position: relative;
+	padding:15px 0;
+	box-sizing: border-box;
+
 }
+
+.word-wrapper-p::before{
+	content:"";
+	width:100%;
+	height:2px;
+	position: absolute;
+	top:0;
+	background-image: url("../image/line.png");
+	background-size: 100% 100%;
+	left: 0
+}
+.word-wrapper-p::after{
+	content:"";
+	width:100%;
+	height:2px;
+	position: absolute;
+	bottom:0;
+	background-image: url("../image/line.png");
+	background-size: 100% 100%;
+	left: 0
+}
+
+
 .word-wrapper-p::-webkit-scrollbar {
 	display:none
 }
@@ -26,6 +68,7 @@ body{
 .word-wrapper p{
 	color:#C4CDDE;
 	font-size:14px;
+	line-height: 1.5;
 }
 .word-wrapper p:nth-child(1){
 	

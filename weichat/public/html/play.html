@@ -34,6 +34,12 @@
 			display: inline-block;
 			margin-top:15px;
 			margin-left:20px;
+			text-align: center;
+		}
+		.avatar img{
+			width:88%;
+			height:88%;
+			border-radius: 50%;
 		}
 		.person-blood{
 			display: inline-block;
@@ -72,6 +78,17 @@
 			right:10px;
 			bottom:154px;
 		}
+
+		.attack{
+			width:55px;
+			height:55px;
+			background: url('../image/icon/full.png');
+			background-size:100% 100%;
+			position: absolute;
+			right:10px;
+			top:154px;
+		}
+
 		.notify{
 			height:123px;
 			width:100%;
@@ -142,13 +159,148 @@
 			font-size: 18px;
 			text-align: right;
 		}
+		.victory-mask,.failed-mask{
+			position: fixed;
+			top:0;
+			bottom:0;
+			left:0;
+			right:0;
+			background:rgba(0,0,0,.5);
+			display: none;
+		}
+		.victory-content,.failed-content{
+			position: absolute;
+			top:50%;
+			left:50%;
+			transform: translate(-50%,-50%);
+			width:88%;
+			height:180px;
+			margin:0 auto;
+			background: url("../image/victoryMask.png");
+			background-size: 100% 100%;
+			color: #fff;
+			text-align: center;
+			font-size: 13px;
+		}
+		.victory-content::before{
+			/*position: */
+			content:"";
+			position: absolute;
+			left:50%;
+			transform: translateX(-50%);
+			width:75px;
+			height:78px;
+			background: url('../image/icon/shape.png');
+			background-size: 100% 100%;
+			top:-44px;
+			/*padding-*/
+		}
+
+		.victory-content p, failed-content p{
+			line-height: 1.2;
+		}
+		.victory-title,.failed-title{
+			color:#4aee60;
+			font-size: 20px;
+			padding-top:50px;
+			font-size: 16px;
+		}
+		.victory-btn,.failed-btn{
+			margin:0 auto;
+			margin-top: 16px;
+			width:138px;
+			height:32px;
+			background: url('../image/button1small.png');
+			background-size: 100% 100%;
+			line-height: 32px;
+			color: #232c3d;
+			font-size: 16px;
+
+		}
+		.failed-color{
+			color: #ffc515;
+		}
+
+		.question-mask{
+			position: fixed;
+			top:0;
+			bottom:0;
+			left:0;
+			right:0;
+			background-image: url("../image/bg0.png");
+			z-index: 99;
+			color:#fff;
+		}
+
+		.question-content{
+			background: #000;
+			color:#fff;
+			width:82%;
+			margin:0 auto;
+			margin-top:70px;
+			padding:30px 20px;
+			box-sizing: border-box;
+		}
+		.question-list{
+			width:70%;
+			margin:0 auto;
+			/*padding:0 20px;*/
+		}
+		.check-style{
+			width:15px;
+			height:15px;
+			border-radius:50%;
+			color:#fff;
+			border:1px solid #fff;
+			position: relative;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		input[type=radio]{
+		    position: absolute;
+		    visibility: hidden;			
+		}
+		input[type=radio]:checked ~ .check-style{
+			border:1px solid #4aed60;
+		}
+		input[type=radio]:checked ~ .check-style::after{
+			/*border:1px solid #4aed60;*/
+			content:"";
+			width:5px;
+			height:5px;
+			border-radius:50%;
+			background: #4aed60;
+			position: absolute;
+			top: 5px;
+    		left: 5px;
+		}
+
+		li p{
+			display: inline-block;
+			padding:15px 6px;
+		}
+
+		.question-btn{
+			background: url('../image/button0.png');
+			background-size: 100% 100%;
+			width:82%;
+			height:44px;
+			text-align: center;
+			line-height: 44px;
+			color:#000;
+			position: absolute;
+			bottom:110px;
+			margin:0 auto;
+			left:50%;
+			transform: translateX(-50%);
+		}
 	</style>
 </head>
 <body>
 	<div class="play-container">
 		<div class="person-info">
 			<div class="avatar">
-				
+				<img src="" alt="" class='avatar-img'>
 			</div>
 			<div class="person-blood">
 				<p>中二病体 <span class="blood1"><img src="../image/icon/shield_charged.png" alt=""></span></p>
@@ -176,43 +328,107 @@
 			</div>
 		</div>
 		<div class="camera"></div>
+		<div class="attack"></div>
+	</div>
+
+	<div class="victory-mask">
+		<div class="victory-content">
+			<p class="victory-title">游戏胜利</p>
+			<p>"你的中二力强过了所有人！</p>
+			<p>现在就扫描最终传送点召唤波思吧！"</p>
+			<div class="victory-btn">确定</div>
+		</div>
+	</div>
+
+
+
+	<div class="failed-mask">
+		<div class="failed-content">
+			<p class="failed-title failed-color">游戏失败</p>
+			<p>你炸…哦不你的gPhone炸了</p>
+			<p class='failed-color'>中二病体消失</p>
+			<div class="failed-btn">确定</div>
+		</div>
+	</div>
+
+
+	<div class="question-mask">
+		<div class="question-content">把大象放冰箱分几步？</div>
+		<ul class="question-list">
+			<li>
+				<label for="question1">
+					<input type="radio" id='question1' name='question'>
+					<div class="check-style"></div>
+					<p >三步</p>
+				</label>
+			</li>
+			<li>
+				<label for="question2">
+					<input type="radio" id='question2' name='question'>
+					<div class="check-style"></div>
+					<p >三步</p>
+				</label>
+			</li>
+			<li>
+				<label for="question3">
+					<input type="radio" id='question3' name='question'>
+					<div class="check-style"></div>
+					<p >三步</p>
+				</label>
+			</li>
+
+		</ul>
+
+
+		<div class="question-btn">确定</div>
 	</div>
 
 </body>
+<script src='http://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script>
 	//104.063015,30.592738
-	var map = new BMap.Map("map-container"); 
-	var point = new BMap.Point(104.063015,30.592738); 
-	map.centerAndZoom(point, 18);
+	// var map = new BMap.Map("map-container"); 
+	// var point = new BMap.Point(104.063015,30.592738); 
+	// map.centerAndZoom(point, 18);
 
-	var pt = new BMap.Point(104.063015,30.592738);
-	var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20,20),{
-		imageSize:new BMap.Size(20,20)
-	});
-	var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-	map.addOverlay(marker2);  
-
-
-	var pt1 = new BMap.Point(104.063125,30.591768);
-	var myIcon1 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
-		imageSize:new BMap.Size(20,20)
-	});
-	var marker3 = new BMap.Marker(pt1,{icon:myIcon1});  // 创建标注
-	map.addOverlay(marker3);  
-
-	var pt2 = new BMap.Point(104.063825,30.593768);
-	var myIcon2 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
-		imageSize:new BMap.Size(20,20)
-	});
-	var marker4 = new BMap.Marker(pt2,{icon:myIcon2});  // 创建标注
-	map.addOverlay(marker4); 
+	// var pt = new BMap.Point(104.063015,30.592738);
+	// var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20,20),{
+	// 	imageSize:new BMap.Size(20,20)
+	// });
+	// var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+	// map.addOverlay(marker2);  
 
 
+	// var pt1 = new BMap.Point(104.063125,30.591768);
+	// var myIcon1 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
+	// 	imageSize:new BMap.Size(20,20)
+	// });
+	// var marker3 = new BMap.Marker(pt1,{icon:myIcon1});  // 创建标注
+	// map.addOverlay(marker3);  
+
+	// var pt2 = new BMap.Point(104.063825,30.593768);
+	// var myIcon2 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
+	// 	imageSize:new BMap.Size(20,20)
+	// });
+	// var marker4 = new BMap.Marker(pt2,{icon:myIcon2});  // 创建标注
+	// map.addOverlay(marker4); 
+
+
+
+</script>
+<!-- 地图回电 -->
+
+<script>
+	
 </script>
 
 <script>
 	$(function(){
+
+		let avatar=window.localStorage.getItem("headImageUrl")
+		$(".avatar-img").attr("src",avatar)
+
 		let status=true
 		$(".drop-icon").click(function(){
 			console.log($(this).parent().next())
@@ -229,6 +445,133 @@
 			}
 			
 
+		})
+		//  计时器
+		time=10
+
+		setInterval(function(){
+			//let time=10
+			
+			if(time==0){
+				//do sth
+				time=10
+				console.log("time",time)
+				$('.time-out-num').text(time)
+			}
+			else{
+				time--
+				$('.time-out-num').text(time)
+			}
+		},1000)
+
+
+		setTimeout(function(){
+			$('.victory-mask').show()
+		},5000)
+
+
+		setTimeout(function(){
+			$('.victory-mask').hide()
+			$('.failed-mask').show()
+		},8000)
+
+		$(".failed-btn").click(function(){
+			$(".failed-mask").hide()
+		})
+	})
+</script>
+
+<script>
+
+function initialize() {
+var map =new BMap.Map('map-container');
+mp.centerAndZoom(new BMap.Point(104.063015,30.592738), 18);
+}
+
+function loadScript() {
+var script = document.createElement("script");
+script.src ="http://api.map.baidu.com/api?v=1.2&callback=initialize";
+document.body.appendChild(script);
+}
+
+
+
+	$(function(){
+
+		var map = new BMap.Map("map-container"); 
+		var point = new BMap.Point(104.063015,30.592738); 
+		map.centerAndZoom(point, 18);
+		
+	// var pt = new BMap.Point(104.063015,30.592738);
+	// var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20,20),{
+	// 	imageSize:new BMap.Size(20,20)
+	// });
+	// var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+	// map.addOverlay(marker2);  
+
+
+		$.ajax({
+			url:"../js/test.json",
+			success:function(res){
+
+			///	loadScript()
+				
+				let points=res.points
+				console.log("地图",points)
+				points.forEach((item,index)=>{
+					// console.log("map",map)
+					// var map = new BMap.Map("map-container"); 
+					let pt=new Bmap.Point(104.063015,30.592738)
+					let icon=(item.status==1?"../image/icon/tower_normal.png":"../image/icon/tower_abnormal.png")
+					let myIcon = new BMap.Icon(icon, new BMap.Size(20,20),{
+						imageSize:new BMap.Size(20,20)
+					});	
+					var marker = new BMap.Marker(point,{icon:myIcon});  // 创建标注
+					map.addOverlay(marker); 
+
+				})
+
+			}
+		})	
+
+
+		$.ajax({
+			url:"http://gluxen.com/killBoss/get_message_for_jssdk.json?url="+location.href,
+			success:function(res){
+				console.log(res)
+				wx.config({
+				    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				    appId: 'wxb87f3d63ac2672f7', // 必填，公众号的唯一标识
+				    timestamp: res.timestamp, // 必填，生成签名的时间戳
+				    nonceStr: res.noncestr, // 必填，生成签名的随机串
+				    signature: res.signature,// 必填，签名，见附录1
+				    jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+
+				wx.ready(function(){
+
+				})
+			}
+
+		})
+
+		$(".camera").click(function(){
+			wx.scanQRCode({
+				needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+				scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+				success: function (res) {
+				// var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+				console.log(res)
+			    }
+			});			
+		})
+
+		$('.question-btn').click(function(){
+			$(".question-mask").hide()
+		})
+
+		$('.attack').click(function(){
+			$(".question-mask").show()
 		})
 	})
 </script>

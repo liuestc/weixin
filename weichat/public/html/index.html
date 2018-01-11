@@ -12,8 +12,9 @@
 	<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
 </head>
 <body>
-	<img src="" alt="">
+	<!-- <img src="" alt=""> -->
 	<div class="word-wrapper">
+		<img src="../image/kill_logo.png" alt="">
 		<div class="word-wrapper-p">
 			<p>balabal ajd ajkka aka laj</p>
 			<p>balabal ajd ajkka aka laj</p>
@@ -22,14 +23,59 @@
 			<p>balabal ajka laj</p>
 			<p>balabal ajd ajkka aka laj</p>
 			<p>balabal ajd ajaka laj</p>
-			<p>balabal ajd ajkka ajkka aka laj</p>
-			<p>balabal ajda aka laj</p>
-			<p>balabal ajd ajkka aka laj</p>
-			<p>balabal ajd ajka laj</p>
+<!-- 			<p>balabal ajd ajkka ajkka aka laj</p>
+			<p>balabal ajda aka laj</p> -->
+			<!-- <p>balabal ajd ajkka aka laj</p> -->
+<!-- 			<p>balabal ajd ajka laj</p>
 			<p>balabal aa aka laj</p>
-			<p>balabal ajdka laj</p>
+			<p>balabal ajdka laj</p> -->
 		</div>
 	</div>
 	<div class="start-btn">进入游戏</div>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+<script>
+	// alert(location.href)
+	function getParams(code){
+		let query=location.href.split("?")[1].split("&")
+		// let code=query.split("&")
+		let queryArr={}
+		query.forEach((item,index)=>{
+			let key=item.split("=")[0]
+			let val=item.split("=")[1]
+			queryArr[key]=val
+		})	
+		
+		console.log(queryArr.code)	
+
+		return queryArr.code
+	}
+
+	let code=getParams("code")
+	console.log("code",code)
+
+
+	$(function(){
+		$(".start-btn").click(function(){
+			location.href='./progress.html'
+		})
+
+		$.ajax({
+			url:"http://gluxen.com/killBoss/user_weixinLogin.json",
+			data:{
+				code:code
+			},
+			success:function(res){
+				// alert(res)
+				console.log(res)
+				let user=res.user
+
+				window.localStorage.setItem("headImageUrl",user.headImageUrl)
+				window.localStorage.setItem("openId",user.openId)
+				window.localStorage.setItem("userName",user.userName)
+				window.localStorage.setItem("id",user.id)
+			}
+		})
+	})
+</script>
 </html>
