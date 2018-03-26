@@ -94,7 +94,7 @@
 			width:100%;
 			position: absolute;
 			bottom:0;
-			transition: all ease 1s;
+			transition: all ease .5s;
 
 		}
 		.notify-title{
@@ -230,6 +230,7 @@
 			background-image: url("../image/bg0.png");
 			z-index: 99;
 			color:#fff;
+			display: none;
 		}
 
 		.question-content{
@@ -294,6 +295,217 @@
 			left:50%;
 			transform: translateX(-50%);
 		}
+
+
+		.mask{
+			position: fixed;
+			background-image: url('../image/bg0.png');
+			background-size: 100% 100%;
+			top:0;
+			bottom:0;
+			left:0;
+			right:0;
+			text-align: center;
+			color:#fff;
+			display: none;
+			z-index: 99;
+		}
+		.mask img{
+			width:60px;
+			height:60px;
+			margin-top:200px;
+		}
+
+		.tower-status{
+			color: #ffd715;
+			margin-top:30px;
+		}
+
+		.tower-notify{
+			font-size: 14px;
+			padding-top:10px;
+		}
+
+		.charge-mask{
+			/*display: block;*/
+		}
+
+		.green{
+			color: #4aee60;
+			font-weight: 300;
+		}
+
+		.btn-img{
+			width:82%;
+			height:44px;
+			line-height: 44px;
+			text-align: center;
+			
+			margin: 0 auto;
+    		margin-top: 20px;
+		}
+		.occupy{
+			background: url('../image/button0.png');
+			color: #232c3d;
+			background-size: 100% 100%;
+		}
+		.search{
+			background: url('../image/button2.png');
+			color: #4aee60;
+			background-size: 100% 100%;
+		}
+		.charge-top{
+			margin-top: 50px;
+		}
+
+		.question-list-mask{
+			/*display: block;*/
+		}
+		/*question-mask*/
+
+
+
+		.question-content-occupy{
+			display: inline-block;
+		}
+
+		ul.question-ul{
+			margin:10px auto;
+			/*margin:20px;*/
+
+		}
+		li.question-li{
+			position: relative;
+			background: #161f2f;
+			/*margin:20px;*/
+			padding:15px 20px;
+			margin:6px 0 ;
+			text-align: left;
+
+		}
+
+		ul.question-ul li.question-li input[type=radio]{
+		    position: absolute;
+		    visibility: hidden;
+		}
+
+		ul.question-ul li.question-li .check-style{
+		    display: inline-block;
+		    position: absolute;
+		    border: 2px solid #AAAAAA;
+		    border-radius: 100%;
+		    height: 15px;
+		    width: 15px;
+		    top: 30px;
+		    right: 20px;
+		    z-index: 5;
+		    transition: border .25s linear;
+			-webkit-transition: border .25s linear;
+		}
+
+		ul.question-ul li.question-li .check-style::before {
+		    display: block;
+		    position: absolute;
+			content: '';
+		    border-radius: 100%;
+		    height: 8px;
+		    width: 8px;
+			top: 50%;
+		    left: 50%;
+		    transform: translate(-52%,-58%);
+		    margin: auto;
+			transition: background 0.25s linear;
+			-webkit-transition: background 0.25s linear;
+		}
+		input[type=radio]:checked ~ .check-style{
+			border:2px solid #0DFF92;
+		}
+		input[type=radio]:checked ~ .check-style::before{
+		    background: #0DFF92;
+		}
+
+		.star{
+			display: inline-block;
+			width:14px;
+			height: 14px;
+		}
+		.star img{
+			width:100%;
+			height: 100%;
+		}
+		.star-word{
+			font-size: 12px;
+		}
+		.star-content{
+			padding:4px 4px 4px 10px;
+
+		}
+		.question-btn-occupy{
+			width:82%;
+			margin:0 auto;
+			background: url('../image/button0.png');
+			background-size:100% 100%;
+			text-align: center;
+			color: #232c3d;
+			height:44px;
+			line-height: 44px;
+			position: absolute;
+		    bottom: 35px;
+		    left: 50%;
+		    transform: translateX(-50%);
+
+		}
+
+		.tower-btn{
+			width:82%;
+			margin:0 auto;
+			background: url('../image/button0.png');
+			background-size:100% 100%;
+			text-align: center;
+			color: #232c3d;
+			height:44px;
+			line-height: 44px;
+			position: absolute;
+		    bottom: 35px;
+		    left: 50%;
+		    transform: translateX(-50%);			
+		}
+
+/*		.question-btn-occupy:hover{
+			background: url('../image/button0——.png');
+			background-size:100% 100%;			
+		}*/
+
+		.question-ul{
+			color:#fff;
+		}
+
+		.tower-icon{
+			margin-top: 140px;
+		}
+
+
+
+		.tower-disable-content{
+			color: #ffd715;
+			padding-top:20px;
+		}
+
+
+		.tower-disable.mask{
+			/*display: block;*/
+		}
+		.tower-mask{
+			/*display: block;*/
+		}
+
+		.tower-notify-seconds{
+			color:#ffd715;
+		}
+/*		.failed-mask{
+			display: block;
+		}*/
+	
 	</style>
 </head>
 <body>
@@ -383,48 +595,96 @@
 		<div class="question-btn">确定</div>
 	</div>
 
+	<div class="tower-mask mask">
+		<img src="../image/icon/icon_lock.png" alt="" class='tower-icon'>
+		<p class="tower-status">解锁失败</p>
+		<p class="tower-notify">你的gphone冷却中</p>
+		<p class="tower-notify">冷却时间 <span class='tower-notify-seconds'>30S</span></p>
+	</div>
+
+	<div class="charge-mask mask">
+		<img src="../image/icon/shield_charged.png" alt="" class='tower-icon'>
+		<p class="tower-status">充能成功</p>
+		<p class="tower-notify">
+			你的中二并体生成了「<span class='green'>护盾</span>」
+		</p>
+		<p class="tower-notify">可以承受一次电磁暴打击</p>
+
+		<p class='green charge-top'>是否占领该电磁塔？</p>
+		<div class="occupy btn-img">占领</div>
+		<div class="search btn-img">继续探索</div>
+	</div>
+
+	<div class="question-list-mask mask">
+		<div>
+			<ul class='question-ul'>
+
+			</ul>
+			<div class='tower-btn'>占领</div>
+		</div>		
+	</div>
+
+	<div class="tower-disable mask">
+		<img src="../image/icon/icon_tower.png" alt="">
+		<p class='tower-disable-content'>本充能塔已失效</p>
+		<div class='tower-btn search'>继续探索</div>
+	</div>
+<!-- 
+
+//充能塔失效 tower-disable
+//充能成功 charge-mask
+ -->
+
 </body>
 <script src='http://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-<script>
-	//104.063015,30.592738
-	// var map = new BMap.Map("map-container"); 
-	// var point = new BMap.Point(104.063015,30.592738); 
-	// map.centerAndZoom(point, 18);
-
-	// var pt = new BMap.Point(104.063015,30.592738);
-	// var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20,20),{
-	// 	imageSize:new BMap.Size(20,20)
-	// });
-	// var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-	// map.addOverlay(marker2);  
-
-
-	// var pt1 = new BMap.Point(104.063125,30.591768);
-	// var myIcon1 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
-	// 	imageSize:new BMap.Size(20,20)
-	// });
-	// var marker3 = new BMap.Marker(pt1,{icon:myIcon1});  // 创建标注
-	// map.addOverlay(marker3);  
-
-	// var pt2 = new BMap.Point(104.063825,30.593768);
-	// var myIcon2 = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20,20),{
-	// 	imageSize:new BMap.Size(20,20)
-	// });
-	// var marker4 = new BMap.Marker(pt2,{icon:myIcon2});  // 创建标注
-	// map.addOverlay(marker4); 
-
-
-
-</script>
-<!-- 地图回电 -->
-
-<script>
-	
-</script>
 
 <script>
 	$(function(){
+
+		// websocket
+
+
+		$.ajax({
+			url:"http://gluxen.com/killBoss/getProps.json",
+			xhrFields:{withCredentials: true},
+			success:function(res){
+				console.log("res",res)
+				// var ws = new WebSocket("wss://gluxen.com/killBoss/userSocket");
+				// ws.onopen=function(evt){
+				// 	alert("websocket open")
+				// }
+				// ws.onmessage=function(evt){
+				// 	//get point
+				// 	// draw point
+				// }	
+
+				$.ajax({
+					url:"http://gluxen.com/killBoss/get_message_for_jssdk.json?url="+location.href,
+					xhrFields:{withCredentials: true},
+					success:function(res){
+						console.log(res)
+						wx.config({
+						    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						    appId: 'wxb87f3d63ac2672f7', // 必填，公众号的唯一标识
+						    timestamp: res.timestamp, // 必填，生成签名的时间戳
+						    nonceStr: res.noncestr, // 必填，生成签名的随机串
+						    signature: res.signature,// 必填，签名，见附录1
+						    jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+						});
+
+						wx.ready(function(){
+
+						})
+					}
+
+				})
+
+							
+			}
+		})
+
+
 
 		let avatar=window.localStorage.getItem("headImageUrl")
 		$(".avatar-img").attr("src",avatar)
@@ -444,19 +704,20 @@
 				status=true				
 			}
 			
-
 		})
 		//  计时器
-		time=10
+		time=180
 
 		setInterval(function(){
 			//let time=10
 			
 			if(time==0){
 				//do sth
-				time=10
+				time=180
 				console.log("time",time)
 				$('.time-out-num').text(time)
+
+				// send a msg change tower status
 			}
 			else{
 				time--
@@ -465,103 +726,187 @@
 		},1000)
 
 
-		setTimeout(function(){
-			$('.victory-mask').show()
-		},5000)
+		// setTimeout(function(){
+		// 	$('.victory-mask').show()
+		// },5000)
 
 
-		setTimeout(function(){
-			$('.victory-mask').hide()
-			$('.failed-mask').show()
-		},8000)
+		// setTimeout(function(){
+		// 	$('.victory-mask').hide()
+		// 	$('.failed-mask').show()
+		// },8000)
 
 		$(".failed-btn").click(function(){
 			$(".failed-mask").hide()
+		})
+
+		$(".occupy").click(function(){
+			$(".charge-mask").hide()
+			$(".question-list-mask").show()
+			$.ajax({
+				url:"../js/test.json",
+				success:function(res){
+					
+					let questionList=res.question
+					console.log(questionList)
+					questionList.forEach((item,index)=>{
+						let hard=item.hard
+						starStr1=""
+						for(let i=0;i<hard;i++){
+							starStr1+='<span class="star"><img src="../image/icon/star_full.png" alt=""></span>'
+						}
+						let starStr2=""
+						for(let j=0;j<(5-hard);j++){
+							starStr2+='<span class="star"><img src="../image/icon/star.png" alt=""></span>'
+						}
+
+						let starContent="<div class='star-content'><span class='star-word'>难度：</span>"+starStr1+starStr2+"</div>"
+						console.log("id",item.id)
+						let label="<label for='"+item.id+"'>"+
+									"<div class='question-content-occupy'><span>【强子】</span><span>"+item.topic+"</span></div>"+
+									"<input type='radio'  name='question' id='"+item.id+"'>"+
+									"<div class='check-style'></div>"+
+								  "</label>"	
+						// console.log("label",label)
+						let liContent="<li class='question-li'>"+label+starContent+"</li>"
+						console.log("liContent",liContent)
+						$(".question-ul").append(liContent)
+					})
+				}
+			})
+
+		})
+
+		$(".search").click(function(){
+			// $(".charge-mask").hide()
+			$(this).parent().hide()
+		})
+
+
+		$(".question-btn-occupy").click(function(){
+			let questionId=$("[type=radio]:checked").attr("id")||"001"
+			alert(questionId)
+			$(".question-list-mask").hide()
 		})
 	})
 </script>
 
 <script>
 
-function initialize() {
-var map =new BMap.Map('map-container');
-mp.centerAndZoom(new BMap.Point(104.063015,30.592738), 18);
-}
-
-function loadScript() {
-var script = document.createElement("script");
-script.src ="http://api.map.baidu.com/api?v=1.2&callback=initialize";
-document.body.appendChild(script);
-}
-
-
-
 	$(function(){
-
-		var map = new BMap.Map("map-container"); 
-		var point = new BMap.Point(104.063015,30.592738); 
-		map.centerAndZoom(point, 18);
-		
-	// var pt = new BMap.Point(104.063015,30.592738);
-	// var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20,20),{
-	// 	imageSize:new BMap.Size(20,20)
-	// });
-	// var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-	// map.addOverlay(marker2);  
+		openId=window.localStorage.getItem("openId")
+		var map = new BMap.Map("map-container");    
+		var point = new BMap.Point(104.063015,30.592738);    
+		map.centerAndZoom(point, 16);  // 编写自定义函数，创建标注   
 
 
-		$.ajax({
-			url:"../js/test.json",
-			success:function(res){
+		function addMarker(pt, status){  // 创建图标对象   
+		    var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20, 20), {    
+		        imageSize:new BMap.Size(20,20)
+		    });      
+		    // 创建标注对象并添加到地图   
+		    if(status==0){
+			    var myIcon = new BMap.Icon("../image/icon/tower_normal.png", new BMap.Size(20, 20), {    
+			        imageSize:new BMap.Size(20,20)
+			    });
+		    }
+		    if(status==1){
+			    var myIcon = new BMap.Icon("../image/icon/tower_abnormal.png", new BMap.Size(20, 20), {    
+			        imageSize:new BMap.Size(20,20)
+			    });
+		    }
+		    else{
+			    var myIcon = new BMap.Icon("../image/icon/tower_occupy.png", new BMap.Size(20, 20), {    
+			        imageSize:new BMap.Size(20,20)
+			    });		    	
+		    }
+		    console.log("pt",pt)
+		    var marker = new BMap.Marker(pt, {icon: myIcon});    
+		    map.addOverlay(marker);    
+		}
 
-			///	loadScript()
-				
-				let points=res.points
-				console.log("地图",points)
-				points.forEach((item,index)=>{
-					// console.log("map",map)
-					// var map = new BMap.Map("map-container"); 
-					let pt=new Bmap.Point(104.063015,30.592738)
-					let icon=(item.status==1?"../image/icon/tower_normal.png":"../image/icon/tower_abnormal.png")
-					let myIcon = new BMap.Icon(icon, new BMap.Size(20,20),{
-						imageSize:new BMap.Size(20,20)
-					});	
-					var marker = new BMap.Marker(point,{icon:myIcon});  // 创建标注
-					map.addOverlay(marker); 
+		setTimeout(function(){
+			$.ajax({
+				url:"../js/test.json",
+				success:function(res){
+					
+					let points=res.points
+					console.log("地图",points)
+					var bounds = map.getBounds();
+					var lngSpan = bounds.Ae - bounds.Ge;    
+					var latSpan = bounds.ze - bounds.Fe;    
+					console.log("lngSpan",lngSpan)
 
-				})
+					points.forEach((item,index)=>{
+						let point=new BMap.Point(item.langitude,item.latitude)
+						let status=item.status
+						addMarker(point, status);
+					})		
 
-			}
-		})	
+				}
+			})			
+		},1000)
+
+		setTimeout(function(){
+			map.clearOverlays()
+		},5000)
 
 
-		$.ajax({
-			url:"http://gluxen.com/killBoss/get_message_for_jssdk.json?url="+location.href,
-			success:function(res){
-				console.log(res)
-				wx.config({
-				    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-				    appId: 'wxb87f3d63ac2672f7', // 必填，公众号的唯一标识
-				    timestamp: res.timestamp, // 必填，生成签名的时间戳
-				    nonceStr: res.noncestr, // 必填，生成签名的随机串
-				    signature: res.signature,// 必填，签名，见附录1
-				    jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-				});
+		// $.ajax({
+		// 	url:"http://gluxen.com/killBoss/get_message_for_jssdk.json?url="+location.href,
+		// 	xhrFields:{withCredentials: true},
+		// 	success:function(res){
+		// 		console.log(res)
+		// 		wx.config({
+		// 		    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		// 		    appId: 'wxb87f3d63ac2672f7', // 必填，公众号的唯一标识
+		// 		    timestamp: res.timestamp, // 必填，生成签名的时间戳
+		// 		    nonceStr: res.noncestr, // 必填，生成签名的随机串
+		// 		    signature: res.signature,// 必填，签名，见附录1
+		// 		    jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		// 		});
 
-				wx.ready(function(){
+		// 		wx.ready(function(){
 
-				})
-			}
+		// 		})
+		// 	}
 
-		})
+		// })
 
+//  扫一扫
 		$(".camera").click(function(){
 			wx.scanQRCode({
 				needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
 				scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
 				success: function (res) {
 				// var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-				console.log(res)
+					let id=res.resultStr
+
+					console.log(res)
+					if(id==1){
+						// alert(id)
+
+						$.ajax({
+							url:""
+						})
+
+					}
+					// $.ajax({
+					// 	url:"http://gluxen.com/killBoss/scanCrop.json",
+					// 	xhrFields:{withCredentials: true},
+					// 	data:{
+					// 		propId:	id,
+					// 		openid:openId
+					// 	},
+					// 	success:function(response){
+					// 		alert(JSON.stringify(response))
+					// 		//  判断塔的状态  显示不同内容
+					// 		//alert(JSON.stringify(res))
+					// 		if(response.prop.status=='0'){
+					// 			// alert(1)
+					// 		}
+					// 	}
+					// })
 			    }
 			});			
 		})

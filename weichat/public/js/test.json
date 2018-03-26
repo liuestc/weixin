@@ -1,5 +1,6 @@
 {
 	"id":111,
+	"time":20,
 	"question":[
 		{	"id":1,
 			"hard":2,
@@ -22,21 +23,35 @@
 	"points":[
 		{
 			"id":1,
-			"langitude":104.061125,
-			"latitude":30.598768,
-			"status":0
+			"langitude":104.066125,
+			"latitude":30.588768,
+			"status":1
 		},
 		{
 			"id":2,
 			"langitude":104.063125,
-			"latitude":30.592768,
-			"status":0
+			"latitude":30.599768,
+			"status":2
 		},
 		{
 			"id":3,
 			"langitude":104.064125,
-			"latitude":30.591168,
+			"latitude":30.581168,
 			"status":0
+		},
+		{
+
+			"id":4,
+			"langitude":104.063015,
+			"latitude":30.592738,
+			"status":1
+
+		},
+		{
+			"id":4,
+			"langitude":104.063915,
+			"latitude":30.592138,
+			"status":2
 		}
 
 	]
